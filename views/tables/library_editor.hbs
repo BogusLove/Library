@@ -1,0 +1,101 @@
+{{#if admin}}
+  <br>
+  <h2>Table: {{table}}</h2>
+  <br>
+  <form action="/add_library" method="post" ref='uploadForm' encType="multipart/form-data">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">New name:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+            <input type="text" name="name" class="form-control">
+            <div class="" style="width: 2px"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">New address:&nbsp&nbsp</span>
+            <input type="text" name="address" class="form-control">
+            <div class="" style="width: 2px"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">New schedule:</span>
+            <input type="text" name="schedule" class="form-control">
+            <div class="" style="width: 2px"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">New image:&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+          <div class="" style="margin: 5px">
+            <input type="file" accept=".jpg,.png" name="image">
+          </div>
+            <div class="" style="width: 2px"></div>
+            <span class="input-group-btn">
+              <button class="btn btn-success" type="submit">Insert</button>
+            </span>
+        </div>
+      </div>
+    </div>
+  </form>
+  <br>
+  {{#if items}}
+    {{#each items}}
+      <div class="card-group">
+        {{#each this}}
+          <div class="card" style="max-width: 40% !important">
+            <img class="card-img-top" src="{{this.library_image}}" alt="No photo">
+            <div class="card-body">
+              <h4 class="card-title">{{this.library_name}}</h4>
+              <p class="card-text">Address: {{this.library_address}}</p>
+              <small class="text-muted">Schedule: {{this.library_schedule}}</small>
+            </div>
+            <div class="card-footer">
+              <form action="/update_library/{{this.library_id}}" method="post">
+                <input type="text" value="{{this.library_name}}" name="name_to_update" class="form-control">
+                <input type="text" value="{{this.library_address}}" name="address_to_update" class="form-control">
+                <input type="text" value="{{this.library_schedule}}" name="schedule_to_update" class="form-control">
+                <button class="btn btn-outline-warning" type="submit">Update</button>
+              </form>
+              <br>
+              <form action="/delete_library/{{this.library_id}}" method="post">
+                <span class="input-group-btn">
+                  <button class="btn btn-outline-danger" type="submit">Delete</button>
+                </span>
+              </form>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{/each}}
+  {{else}}
+    <h2>Nothing to show</h2>
+  {{/if}}
+{{else}}
+  <br>
+  {{#if items}}
+    {{#each items}}
+      <div class="card-group">
+        {{#each this}}
+          <div class="card">
+            <img class="card-img-top" src="{{this.library_image}}" alt="No photo">
+            <div class="card-body">
+              <h4 class="card-title">{{this.library_name}}</h4>
+              <p class="card-text">Address: {{this.library_address}}</p>
+              <small class="text-muted">Schedule: {{this.library_schedule}}</small>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{/each}}
+  {{else}}
+    <h2>Nothing to show</h2>
+  {{/if}}
+{{/if}}

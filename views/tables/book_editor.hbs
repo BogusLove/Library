@@ -1,0 +1,213 @@
+<br>
+<h2>Table: {{table}}</h2>
+<br>
+<form action="/add_book" method="post" ref='uploadForm' encType="multipart/form-data">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">New name:</span>
+        <input type="text" class="form-control" value="" name="name">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">New year:</span>
+        <input type="text" class="form-control" maxlength="4" minlength="4" name="year"></input>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <button type="button" class="btn btn-secondary" onclick="show('authors')">New author:</button>
+        <div class="row" id="authors" style="display: none;">
+          <div class="col-lg-6">
+            {{# each author}}
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <input type="checkbox" name="author" value="{{this.author_id}}">{{this.author_fullname}}
+                </span>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <button type="button" class="btn btn-secondary" onclick="show('libraries')">New library:</button>
+        <div class="row" id="libraries" style="display: none;">
+          <div class="col-lg-6">
+            {{# each library}}
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <input type="checkbox" name="library" value="{{this.library_id}}">{{this.library_name}}
+                </span>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <button type="button" class="btn btn-secondary" onclick="show('rubrics')">New rubrics:</button>
+        <div class="row" id="rubrics" style="display: none;">
+          <div class="col-lg-6">
+            {{# each rubric}}
+              <div class="input-group">
+                <span class="input-group-addon">
+                    <input type="checkbox" name="rubric" value="{{this.rubric_id}}">{{this.rubric_name}}
+                </span>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">New type:</span>
+          <select name="type">
+            {{# each type}}
+              <option value="{{this.type_id}}">{{this.type_name}}</option>
+            {{/each}}
+          </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">New publisher:</span>
+        <select name="publisher">
+          {{# each publisher}}
+            <option value="{{this.publisher_id}}">{{this.publisher_name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">New category:</span>
+        <select name="category">
+          {{# each category}}
+            <option value="{{this.category_id}}">{{this.category_name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">New image:&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+        <div class="" style="margin: 5px">
+          <input type="file" accept=".jpg,.png" name="image">
+        </div>
+          <div class="" style="width: 2px"></div>
+          <span class="input-group-btn">
+            <button class="btn btn-success" type="submit">Insert</button>
+          </span>
+      </div>
+    </div>
+  </div>
+</form>
+<br>
+{{#each book}}
+  <div class="card-deck">
+    {{#each this}}
+      <div class="card" style="max-width: 30% !important">
+        <img class="card-img-top" src="{{this.book_image}}" alt="Card image cap">
+        <div class="card-body">
+          <h4 class="card-title">{{this.book_name}}({{this.book_year}})</h4>
+          <p class="card-text">{{this.author_fullname}}</p>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-success" href="/add_book/{{this.book_id}}" role="button">Add</a>
+          <a class="btn btn-warning" href="/update_form/{{this.book_id}}" role="button">Update</a>
+          <a class="btn btn-danger" href="/delete_book/{{this.book_id}}" role="button">Delete</a>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  <br>
+{{/each}}
+
+
+
+
+
+<table style='border-collapse: collapse;'>
+  {{# if book}}
+    {{# each book}}
+      <tr>
+        <form action="/update_book/{{this.book_id}}" method="post">
+          <td>
+            <input type="text" name="name_to_update" value="{{this.book_name}}"/>
+          </td>
+          <td>
+            <input type="text" name="year_to_update" maxlength="4" minlength="4" value="{{this.book_year}}"/>
+          </td>
+          <td>
+            <input type="text" value="{{this.type_name}}"/>
+            <input type="text" name="type_to_update" value="{{this.type_id}}" hidden/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" value="{{this.publisher_name}}"/>
+            <input type="text" name="publisher_to_update" value="{{this.publisher_id}}" hidden/>
+          </td>
+          <td>
+            <input type="text" value="{{this.category_name}}"/>
+            <input type="text" name="category_to_update" value="{{this.category_id}}" hidden/>
+          </td>
+          <td>
+
+          </td>
+        </tr>
+        <tr>
+          <td>
+
+          </td>
+          <td>
+
+          </td>
+          <td>
+            <input type="submit" value="update" />
+            </form>
+            <form action="/delete_book/{{this.book_id}}" method="post">
+              <input type="submit" value="delete"></input>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td style='border-bottom: 1px solid black;'></td>
+          <td style='border-bottom: 1px solid black;'></td>
+          <td style='border-bottom: 1px solid black;'></td>
+        </tr>
+    {{/each}}
+</table>
+  {{else}}
+    <h2>Nothing to show</h2>
+  {{/if}}
+</table>
+
+<script type="text/javascript" >
+  function show(id) {
+      var form = document.getElementById(id);
+      if (form.style.display != "none") form.style.display = "none";
+      else form.style.display = "block";
+  }
+</script>

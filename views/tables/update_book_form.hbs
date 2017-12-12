@@ -1,0 +1,17 @@
+<div class="card" style="max-width: 30% !important">
+  <form class="" action="/update_book/{{book.book_id}}" method="post">
+
+  </form>
+  <img class="card-img-top" src="{{book.book_image}}" alt="Card image cap">
+  <div class="card-body">
+    <h4 class="card-title">{{book.book_name}}({{book.book_year}})</h4>
+    <p class="card-text">{{book.author_fullname}}</p>
+  </div>
+  <div class="card-footer">
+    <input type="submit" value="Update">
+    </form>
+    <form action="/delete_book/{{book.book_id}}" method="post">
+      <input type="submit" value="Delete">
+    </form>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<br>
+<h2>Table: {{table}}</h2>
+<br>
+<form action="/add_rubric" method="post">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">New rubric:</span>
+          <input type="text" name="name" class="form-control">
+          <span class="input-group-btn">
+            <button class="btn btn-outline-success" type="submit">Insert</button>
+          </span>
+      </div>
+    </div>
+  </div>
+</form>
+<br>
+{{# if items}}
+  {{# each items}}
+    <form action="/update_rubric/{{this.rubric_id}}" method="post">
+      <div class="row">
+        <div class="col-lg-6 ">
+          <div class="input-group">
+            <input type="text" class="form-control" value="{{this.rubric_name}}" name="name_to_update">
+            <span class="input-group-btn">
+              <button class="btn btn-outline-warning" type="submit">Update</button>
+            </span>
+          </form>
+          <form action="/delete_rubric/{{this.rubric_id}}" method="post">
+            <span class="input-group-btn">
+              <button class="btn btn-outline-danger" type="submit">Delete</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+  {{/each}}
+{{else}}
+  <h2>Nothing to show</h2>
+{{/if}}
