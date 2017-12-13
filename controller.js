@@ -152,7 +152,7 @@ const controllers = {
   book_author: {
     getAll: function () {
       return sequelize
-        .query('select ba.*, b.book_name, a.author_fullname from book_author ba join book b on b.book_id = ba.book_id join author a on a.author_id = ba.author_id');
+        .query('select ba.*, b.book_name, a.author_fullname from book_author ba join book b on b.book_id = ba.book_id join author a on a.author_id = ba.author_id;');
     },
     add: function (param) {
       return sequelize

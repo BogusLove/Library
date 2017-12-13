@@ -3,19 +3,18 @@
 {{#each items}}
   <div class="row">
       <div class="col-lg-8">
-        <form action="/update_book_author" method="post">
+        <form action="/update_book_author/{{this.book_id}}/{{this.author_id}}" method="post">
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Book:</span>
-            <input type="text" class="form-control" name="name_to_update" value="{{this.book_name}}">
+            <input type="text" class="form-control" name="book_to_update" value="{{this.book_id}}" hidden>
+            <input type="text" class="form-control" name="" value="{{this.book_name}}">
             <span class="input-group-addon" id="basic-addon1">Author:</span>
-            <select class="custom-select" name="country">
+            <select class="custom-select" name="author_to_update">
               <option selected>Current: {{this.author_fullname}}</option>
-              {{# each author}}
-                <option value="{{this.author_id}}">{{this.author_fullname}}</option>
-              {{/each}}
+              {{{ list this.authors }}}
             </select>
             <input type="submit" class="btn btn-warning" value="Update">
-            <form action="/delete_book_author/" method="post">
+            <form action="/delete_book_author/{{this.book_id}}/{{this.author_id}}" method="post">
               <input type="submit" class="btn btn-danger" value="Delete">
             </form>
         </div>
@@ -23,37 +22,3 @@
     </div>
   </div>
 {{/each}}
-
-
-
-
-<table>
-  <th>Book</th>
-  <th>Author</th>
-  <th>Update author</th>
-  {{# if items}}
-    {{# each items}}
-      <form action="/update_book_author/{{this.book_id}}/{{this.author_id}}" method="post">
-        <tr>
-          <td>
-            <input type="text" value="{{this.book_name}}" readonly>
-          </td>
-          <td>
-            <input type="text" value="{{this.author_fullname}}" readonly>
-          </td>
-          <td>
-            <select name="author_to_update">
-                {{{ list this.authors 'author_id' 'author_fullname'}}}
-            </select>
-          </td>
-          <td><input type="submit" value="update" /></td>
-        </form>
-          <form action="/delete_book_author/{{this.book_id}}/{{this.author_id}}" method="post">
-            <td><input type="submit" value="delete"></input></td>
-          </form>
-        </tr>
-      {{/each}}
-  {{else}}
-    <h2>Nothing to show</h2>
-  {{/if}}
-</table>

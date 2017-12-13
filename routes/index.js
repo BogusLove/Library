@@ -282,7 +282,6 @@ router.get('/update_form/:id', (req, res, next) => {
         book['book_id'] === library['book_id'] ? book['libraries'] = library['libraries'].split(',') : 0;
       });
     });
-    console.log(books);
     res.render('tables/update_book_form', {
       table: 'book',
       type: result[0][0],
@@ -297,7 +296,7 @@ router.get('/update_form/:id', (req, res, next) => {
         list: function (items, url, id) {
           var out = "";
           for(var i = 0, l = items.length; i<l; i++) {
-            out = out + '<div class="input-group"><a href="/'+ url + '/' + id +'" class="list-group-item list-group-item-action">' + items[i] + '</a></div>';
+            out = out + '<div class="input-group"><a href="'+ url + id + '" class="list-group-item list-group-item-action">' + items[i] + '</a></div>';
           }
           return out;
         }
@@ -308,27 +307,24 @@ router.get('/update_form/:id', (req, res, next) => {
 /////////////////BOOK_AUTHOR TABLE/////////////////////
 router.get('/book_author_editor/:id', (req, res, next) => {
   Promise.all([
-    controller.book_author.getAll(),/////////////////////////////витягати по конкретному id
-    controller.book.getMain(),
+    controller.book_author.getAll(),
     controller.author.getMain()
   ]).then(result => {
-      let items = result[0][0];
-      let books = result[1][0];
-      let authors = result[2][0];
-      items.map(item => {
-        item['books'] = books;
-        item['authors'] = authors;
-      });
+      let books = result[0][0]
+        .filter(function(item){
+          return item['book_id'] == req.params.id ? item : 0
+        });
+      books.map(book => book['authors'] = result[1][0]);
+      console.log(books);
+      console.log();
       res.render('tables/book_author_editor', {
         table: 'book_author',
-        items: items,
-        books: books,
-        authors: authors,
+        items: books,
         helpers: {
-          list: function (items, key1, key2) {
+          list: function (items) {
             var out = "";
             for(var i = 0, l = items.length; i<l; i++) {
-              out = out + '<option value="' + items[i][key1] + '">' + items[i][key2] + '</option>';
+              out = out + '<option value="' + items[i]['author_id'] + '">' + items[i]['author_fullname'] + '</option>';
             }
             return out;
           }
@@ -338,12 +334,14 @@ router.get('/book_author_editor/:id', (req, res, next) => {
     .catch(err => res.render('error', {message: err.message, error: err}));
 });
 router.post('/update_book_author/:book_id/:author_id', (req, res, next) => {
-  execute(res, 'book_author', 'update', [
-    req.body.book_to_update,
-    req.body.author_to_update,
-    req.params.book_id,
-    req.params.author_id
+  controller.book_author
+    .update([
+      req.body.book_to_update,
+      req.body.author_to_update,
+      req.params.book_id,
+      req.params.author_id
   ]);
+  res.redirect('/book_author_editor/' + req.params.book_id);
 });
 router.post('/delete_book_author/:book_id/:author_id', (req, res, next) => {
   execute(res, 'book_author', 'delete', [req.params.book_id, req.params.author_id]);
