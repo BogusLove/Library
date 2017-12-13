@@ -254,18 +254,61 @@ router.post('/delete_book/:id', (req, res, next) => {
   execute(res, 'book', 'delete', [req.params.id]);
 });
 router.get('/update_form/:id', (req, res, next) => {
-  controller.book
-    .getAllMany()
-    .then(book => {
-      let item = book[0].find(function(item){return item['book_id'] == req.params.id ? item : 0});
-      res.render('tables/update_book_form', { book: item });
-    })
-    .catch(err => res.render('error', {message: err.message, error: err}));
+  Promise.all([
+    controller.type.getAll(),
+    controller.rubric.getAll(),
+    controller.publisher.getAll(),
+    controller.category.getAll(),
+    controller.country.getAll(),
+    controller.author.getAll(),
+    controller.library.getAll(),
+    controller.book.getAll(),
+    controller.book.getAuthors(),
+    controller.book.getRubrics(),
+    controller.book.getLibraries()
+  ]).then(result => {
+    let books = result[7][0];
+    let authors = result[8][0];
+    let rubrics = result[9][0];
+    let libraries = result[10][0];
+    books.map((book) => {
+      authors.forEach((author) => {
+        book['book_id'] === author['book_id'] ? book['author_fullname'] = author['author'].split(',') : 0;
+      });
+      rubrics.forEach((rubric) => {
+        book['book_id'] === rubric['book_id'] ? book['rubrics'] = rubric['rubrics'].split(',') : 0;
+      });
+      libraries.forEach((library) => {
+        book['book_id'] === library['book_id'] ? book['libraries'] = library['libraries'].split(',') : 0;
+      });
+    });
+    console.log(books);
+    res.render('tables/update_book_form', {
+      table: 'book',
+      type: result[0][0],
+      rubric: result[1][0],
+      publisher: result[2][0],
+      category: result[3][0],
+      country: result[4][0],
+      author: result[5][0],
+      library: result[6][0],
+      book: books.find(function(item){return item['book_id'] == req.params.id ? item : 0}),
+      helpers: {
+        list: function (items, url, id) {
+          var out = "";
+          for(var i = 0, l = items.length; i<l; i++) {
+            out = out + '<div class="input-group"><a href="/'+ url + '/' + id +'" class="list-group-item list-group-item-action">' + items[i] + '</a></div>';
+          }
+          return out;
+        }
+      }
+    });
+  })
 });
 /////////////////BOOK_AUTHOR TABLE/////////////////////
-router.get('/book_author_editor', (req, res, next) => {
+router.get('/book_author_editor/:id', (req, res, next) => {
   Promise.all([
-    controller.book_author.getAll(),
+    controller.book_author.getAll(),/////////////////////////////витягати по конкретному id
     controller.book.getMain(),
     controller.author.getMain()
   ]).then(result => {

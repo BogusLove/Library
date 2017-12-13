@@ -113,7 +113,7 @@
       <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">New image:&nbsp&nbsp&nbsp&nbsp&nbsp</span>
         <div class="" style="margin: 5px">
-          <input type="file" accept=".jpg,.png" name="image">
+          <input type="file" name="image">
         </div>
           <div class="" style="width: 2px"></div>
           <span class="input-group-btn">
@@ -123,7 +123,9 @@
     </div>
   </div>
 </form>
+
 <br>
+
 {{#each book}}
   <div class="card-deck">
     {{#each this}}
@@ -143,66 +145,6 @@
   </div>
   <br>
 {{/each}}
-
-
-
-
-
-<table style='border-collapse: collapse;'>
-  {{# if book}}
-    {{# each book}}
-      <tr>
-        <form action="/update_book/{{this.book_id}}" method="post">
-          <td>
-            <input type="text" name="name_to_update" value="{{this.book_name}}"/>
-          </td>
-          <td>
-            <input type="text" name="year_to_update" maxlength="4" minlength="4" value="{{this.book_year}}"/>
-          </td>
-          <td>
-            <input type="text" value="{{this.type_name}}"/>
-            <input type="text" name="type_to_update" value="{{this.type_id}}" hidden/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="text" value="{{this.publisher_name}}"/>
-            <input type="text" name="publisher_to_update" value="{{this.publisher_id}}" hidden/>
-          </td>
-          <td>
-            <input type="text" value="{{this.category_name}}"/>
-            <input type="text" name="category_to_update" value="{{this.category_id}}" hidden/>
-          </td>
-          <td>
-
-          </td>
-        </tr>
-        <tr>
-          <td>
-
-          </td>
-          <td>
-
-          </td>
-          <td>
-            <input type="submit" value="update" />
-            </form>
-            <form action="/delete_book/{{this.book_id}}" method="post">
-              <input type="submit" value="delete"></input>
-            </form>
-          </td>
-        </tr>
-        <tr>
-          <td style='border-bottom: 1px solid black;'></td>
-          <td style='border-bottom: 1px solid black;'></td>
-          <td style='border-bottom: 1px solid black;'></td>
-        </tr>
-    {{/each}}
-</table>
-  {{else}}
-    <h2>Nothing to show</h2>
-  {{/if}}
-</table>
 
 <script type="text/javascript" >
   function show(id) {

@@ -1,8 +1,35 @@
 <h1>{{table}}</h1>
+
+{{#each items}}
+  <div class="row">
+      <div class="col-lg-8">
+        <form action="/update_book_author" method="post">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Book:</span>
+            <input type="text" class="form-control" name="name_to_update" value="{{this.book_name}}">
+            <span class="input-group-addon" id="basic-addon1">Author:</span>
+            <select class="custom-select" name="country">
+              <option selected>Current: {{this.author_fullname}}</option>
+              {{# each author}}
+                <option value="{{this.author_id}}">{{this.author_fullname}}</option>
+              {{/each}}
+            </select>
+            <input type="submit" class="btn btn-warning" value="Update">
+            <form action="/delete_book_author/" method="post">
+              <input type="submit" class="btn btn-danger" value="Delete">
+            </form>
+        </div>
+      </form>
+    </div>
+  </div>
+{{/each}}
+
+
+
+
 <table>
   <th>Book</th>
   <th>Author</th>
-  <th>Update book</th>
   <th>Update author</th>
   {{# if items}}
     {{# each items}}
@@ -13,11 +40,6 @@
           </td>
           <td>
             <input type="text" value="{{this.author_fullname}}" readonly>
-          </td>
-          <td>
-            <select name="book_to_update">
-                {{{ list this.books 'book_id' 'book_name'}}}
-            </select>
           </td>
           <td>
             <select name="author_to_update">
