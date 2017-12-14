@@ -129,7 +129,7 @@ const controllers = {
     },
     update: function (param) {
       return sequelize
-        .query('update book b set b.book_name = :book_name, b.book_year = :book_year, b.book_type_id = :book_type_id, b.book_publisher_id = :book_publisher_id, b.book_category_id = :book_category_id b.book_image = :book_image where b.book_id = :book_id', {
+        .query('update book b set b.book_name = :book_name, b.book_year = :book_year, b.book_type_id = :book_type_id, b.book_publisher_id = :book_publisher_id, b.book_category_id = :book_category_id, b.book_image = :book_image where b.book_id = :book_id', {
           replacements: {
             book_id: param[0],
             book_name: param[1],

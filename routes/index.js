@@ -5,6 +5,7 @@ const controller = require('../controller');
 const DB_config = require('../config');
 const Sequelize = require('sequelize');
 const expressHbs = require('express-handlebars');
+const fs = require('fs');
 ////////////////////MAIN///////////////////////////
 router.get('/', (req, res, next) =>  {
   res.render('index');
@@ -242,6 +243,7 @@ router.post('/add_book', (req, res, next) => {
 });
 router.post('/update_book/:id', (req, res, next) => {
   if (!req.files.image) {
+    console.log(req.body.current_image);
     execute(res, 'book', 'update', [
       req.params.id,
       req.body.name_to_update,
@@ -376,6 +378,7 @@ function uploadImage(req, name) {
     let new_image = req.files.image;
     const fileName = name;
     path = base + fileName;
+    if (fs.existsSync(path)) fs.unlinkSync(path);
     return new Promise((resolve, reject) => {
       new_image.mv(base + fileName, (err) => {
         if (err) reject(err);
