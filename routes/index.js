@@ -133,7 +133,7 @@ router.get('/library_editor', (req, res, next) =>  {
     .getAll()
     .then((result) => {
       let chunk = [];
-      const size = 4;
+      const size = 2;
       for(let i = 0; i < result[0].length; i+=size){
         chunk.push(result[0].slice(i, i + size));
       };

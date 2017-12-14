@@ -50,8 +50,8 @@
     {{#each items}}
       <div class="card-group">
         {{#each this}}
-          <div class="card" style="max-width: 40% !important">
-            <img class="card-img-top" src="{{this.library_image}}" alt="No photo">
+          <div class="card" style="max-width: 50%!important">
+            <img class="card-img-top" src="{{this.library_image}}" alt="No photo" style="max-height: 50% !important">
             <div class="card-body">
               <h4 class="card-title">{{this.library_name}}</h4>
               <p class="card-text">Address: {{this.library_address}}</p>
@@ -64,7 +64,6 @@
                 <input type="text" value="{{this.library_schedule}}" name="schedule_to_update" class="form-control">
                 <button class="btn btn-outline-warning" type="submit">Update</button>
               </form>
-              <br>
               <form action="/delete_library/{{this.library_id}}" method="post">
                 <span class="input-group-btn">
                   <button class="btn btn-outline-danger" type="submit">Delete</button>
@@ -74,6 +73,7 @@
           </div>
         {{/each}}
       </div>
+      <br>
     {{/each}}
   {{else}}
     <h2>Nothing to show</h2>
