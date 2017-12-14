@@ -7,6 +7,9 @@
       <div class="col-lg-12">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Image:</span>
+          <div class="" style="margin: 5px" hidden>
+            <input type="file" name="current_image" value="{{book.book_image}}">
+          </div>
           <div class="" style="margin: 5px">
             <input type="file" name="image">
           </div>
@@ -28,20 +31,9 @@
         </div>
         <div class="col-lg-12">
           <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Author:</span>
-            <select class="custom-select" name="country">
-              <option selected>Current: {{book.author_fullname}}</option>
-              {{# each author}}
-                <option value="{{this.author_id}}">{{this.author_fullname}}</option>
-              {{/each}}
-            </select>
-          </div>
-        </div>
-        <div class="col-lg-12">
-          <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Type:</span>
-            <select class="custom-select" name="country">
-              <option selected>Current: {{book.type_name}}</option>
+            <select class="custom-select" name="type_to_update">
+              <option selected value="{{book.type_id}}">Current: {{book.type_name}}</option>
               {{# each type}}
                 <option value="{{this.type_id}}">{{this.type_name}}</option>
               {{/each}}
@@ -51,10 +43,21 @@
         <div class="col-lg-12">
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Category:</span>
-            <select class="custom-select" name="country">
-              <option selected>Current: {{book.category_name}}</option>
+            <select class="custom-select" name="category_to_update">
+              <option selected value="{{book.category_id}}">Current: {{book.category_name}}</option>
               {{# each category}}
                 <option value="{{this.category_id}}">{{this.category_name}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Publisher:</span>
+            <select class="custom-select" name="publisher_to_update">
+              <option selected value="{{book.publisher_id}}">Current: {{book.publisher_name}}</option>
+              {{# each publisher}}
+                <option value="{{this.publisher_id}}">{{this.publisher_name}}</option>
               {{/each}}
             </select>
           </div>
@@ -70,14 +73,18 @@
         <div class="col-lg-12">
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Library:</span>
+            <ul class="list-group">
+              {{{ list book.libraries}}}
+            </ul>
           </div>
-          {{{ list book.libraries}}}
         </div>
         <div class="col-lg-12">
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Rubric:</span>
+            <ul class="list-group">
+              {{{ list book.rubrics}}}
+            </ul>
           </div>
-          {{{ list book.rubrics}}}
         </div>
         <div class="col-lg-12">
           <div class="input-group">

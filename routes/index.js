@@ -141,7 +141,7 @@ router.get('/library_editor', (req, res, next) =>  {
     .catch((err) => res.send('error', {message: err.message, error: err}));
 });
 router.post('/add_library', (req, res, next) =>  {
-  uploadImage(req)
+  uploadImage(req, req.body.name)
     .then(result => {
       execute(res, 'library', 'add', [req.body.name, req.body.address, req.body.schedule, result]);
     });
@@ -207,7 +207,7 @@ router.get('/book_editor', (req, res, next) => {
   .catch(err => res.render('error', {message: err.message, error: err}))
 });
 router.post('/add_book', (req, res, next) => {
-  uploadImage(req)
+  uploadImage(req, req.body.name)
     .then(img =>
       controller.book.add([
           req.body.name,
@@ -241,14 +241,31 @@ router.post('/add_book', (req, res, next) => {
   };
 });
 router.post('/update_book/:id', (req, res, next) => {
-  execute(res, 'book', 'update', [
-    req.params.id,
-    req.body.name_to_update,
-    req.body.year_to_update,
-    req.body.type_to_update,
-    req.body.publisher_to_update,
-    req.body.category_to_update
-  ]);
+  if (!req.files.image) {
+    execute(res, 'book', 'update', [
+      req.params.id,
+      req.body.name_to_update,
+      req.body.year_to_update,
+      req.body.type_to_update,
+      req.body.publisher_to_update,
+      req.body.category_to_update,
+      req.body.current_image
+    ]);
+  } else {
+    uploadImage(req, req.body.name_to_update)
+      .then(img => {
+        execute(res, 'book', 'update', [
+          req.params.id,
+          req.body.name_to_update,
+          req.body.year_to_update,
+          req.body.type_to_update,
+          req.body.publisher_to_update,
+          req.body.category_to_update,
+          img
+        ]);
+      })
+      .catch(err => res.render('error', {message: err.message, error: err}));
+  }
 });
 router.post('/delete_book/:id', (req, res, next) => {
   execute(res, 'book', 'delete', [req.params.id]);
@@ -315,8 +332,6 @@ router.get('/book_author_editor/:id', (req, res, next) => {
           return item['book_id'] == req.params.id ? item : 0
         });
       books.map(book => book['authors'] = result[1][0]);
-      console.log(books);
-      console.log();
       res.render('tables/book_author_editor', {
         table: 'book_author',
         items: books,
@@ -353,13 +368,13 @@ function execute(res, table, command, params) {
     .catch(err => res.render('error', {message: err.message, error: err}));
 }
 
-function uploadImage(req) {
+function uploadImage(req, name) {
   let path = '';
   const base = './public/images/';
   const images = '/images/';
   if (req.files.image) {
     let new_image = req.files.image;
-    const fileName = req.body.name;
+    const fileName = name;
     path = base + fileName;
     return new Promise((resolve, reject) => {
       new_image.mv(base + fileName, (err) => {
