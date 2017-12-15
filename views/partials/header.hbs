@@ -8,4 +8,30 @@
         </span>
       </div>
     </div>
+{{# unless admin}}
+
+{{/unless}}
+{{# if admin}}
+<div class="col-lg-4">
+  <form action="/logout" method="post">
+    <div class="input-group input-group-lg">
+      <span class="input-group-btn">
+        <input class="btn btn-success" type="submit" value="Log out">
+      </span>
+    </div>
+  </form>
+</div>
+{{else}}
+  <div class="col-lg-4">
+    <form action="/sign_in" method="post">
+      <div class="input-group input-group-lg">
+        <input type="text" class="form-control" placeholder="Admin" name="admin">
+        <input type="password" class="form-control" placeholder="Password" name="password">
+        <span class="input-group-btn">
+          <input class="btn btn-success" type="submit" value="Log in">
+        </span>
+      </div>
+    </form>
+  </div>
+{{/if}}
 </div>

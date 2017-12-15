@@ -254,6 +254,17 @@ const controllers = {
           }
         });
     }
+  },
+  admin: {
+    get: function (param) {
+      return sequelize
+        .query('select exists(select admin_id from admin where admin_name = :name and admin_password = :password) as exist;', {
+          replacements: {
+            name: param[0],
+            password: param[1]
+          }
+        });
+    }
   }
 };
 

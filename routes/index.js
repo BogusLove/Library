@@ -6,9 +6,23 @@ const DB_config = require('../config');
 const Sequelize = require('sequelize');
 const expressHbs = require('express-handlebars');
 const fs = require('fs');
+const app = require('../app');
 ////////////////////MAIN///////////////////////////
 router.get('/', (req, res, next) =>  {
-  res.render('index');
+  res.render('index', {admin: req.app.get('admin')});
+});
+router.post('/sign_in', (req, res, next) => {
+  controller.admin
+    .get([req.body.admin, req.body.password])
+    .then(result => {
+      result[0][0]['exist'] == 1 ? req.app.set('admin', true) : 0
+    })
+    .catch((err) => res.send('error', {message: err.message, error: err}));
+  res.redirect('/');
+});
+router.post('/logout', (req, res, next) => {
+  req.app.set('admin', false);
+  res.redirect('/');
 });
 /////////////////TABLE TYPE/////////////////////////
 router.get('/type_editor', (req, res, next) => {
@@ -137,7 +151,11 @@ router.get('/library_editor', (req, res, next) =>  {
       for(let i = 0; i < result[0].length; i+=size){
         chunk.push(result[0].slice(i, i + size));
       };
-      res.render('tables/library_editor', {items: chunk, table: 'library', admin: 1});
+      res.render('tables/library_editor', {
+        items: chunk,
+        table: 'library',
+        admin: req.app.get('admin')
+      });
     })
     .catch((err) => res.send('error', {message: err.message, error: err}));
 });
@@ -309,12 +327,20 @@ router.get('/update_form/:id', (req, res, next) => {
       country: result[4][0],
       author: result[5][0],
       library: result[6][0],
+      admin: req.app.get('admin'),
       book: books.find(function(item){return item['book_id'] == req.params.id ? item : 0}),
       helpers: {
         list: function (items, url, id) {
           var out = "";
           for(var i = 0, l = items.length; i<l; i++) {
             out = out + '<div class="input-group"><a href="'+ url + id + '" class="list-group-item list-group-item-action">' + items[i] + '</a></div>';
+          }
+          return out;
+        },
+        userList: function (items) {
+          var out = "";
+          for(var i = 0, l = items.length; i<l; i++) {
+            out = out + '<li class="list-group-item">'+ items[i] +'</li>';
           }
           return out;
         }
