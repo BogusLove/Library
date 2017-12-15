@@ -124,9 +124,7 @@
       </div>
     </div>
   </form>
-
   <br>
-
   {{#each book}}
     <div class="card-deck">
       {{#each this}}
@@ -146,25 +144,26 @@
     <br>
   {{/each}}
 {{else}}
-{{#each book}}
-  <div class="card-deck">
-    {{#each this}}
-      <div class="card" style="max-width: 30% !important">
-        <img class="card-img-top" src="{{this.book_image}}" alt="Card image cap">
-        <div class="card-body">
-          <h4 class="card-title">{{this.book_name}}({{this.book_year}})</h4>
-          <p class="card-text">{{this.author_fullname}}</p>
+  {{#each book}}
+    <div class="card-deck">
+      {{#each this}}
+        <div class="card" style="max-width: 30% !important">
+          <img class="card-img-top" src="{{this.book_image}}" alt="Card image cap">
+          <div class="card-body">
+            <h4 class="card-title">{{this.book_name}}({{this.book_year}})</h4>
+            <p class="card-text">{{this.author_fullname}}</p>
+          </div>
+          <div class="card-footer">
+            <a class="btn btn-success" href="/add_book/{{this.book_id}}" role="button">Add</a>
+            <a class="btn btn-info" href="/update_form/{{this.book_id}}" role="button">Detail</a>
+          </div>
         </div>
-        <div class="card-footer">
-          <a class="btn btn-success" href="/add_book/{{this.book_id}}" role="button">Add</a>
-          <a class="btn btn-info" href="/update_form/{{this.book_id}}" role="button">Detail</a>
-        </div>
-      </div>
-    {{/each}}
-  </div>
-  <br>
-{{/each}}
+      {{/each}}
+    </div>
+    <br>
+  {{/each}}
 {{/if}}
+
 <script type="text/javascript" >
   function show(id) {
       var form = document.getElementById(id);

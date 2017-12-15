@@ -1,43 +1,44 @@
-<h1>{{table}}</h1>
-
-<div class="row">
-  <div class="col-lg-8">
-    <form action="/add_book_library" method="post">
-      <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Book:</span>
-        <input type="text" class="form-control" name="book_id" value="{{book.book_id}}" hidden>
-        <input type="text" class="form-control" name="" value="{{book.book_name}}" readonly>
-        <span class="input-group-addon" id="basic-addon1">Library:</span>
-        <select class="custom-select" name="library_to_add">
-          {{#each library}}
-            <option value="{{this.library_id}}">{{this.library_name}}</option>
-          {{/each}}
-        </select>
-        <input type="submit" class="btn btn-success" value="Insert">
-    </div>
-  </form>
-  </div>
-</div>
-
-{{#each items}}
+{{#if admin}}
+  <h1>{{table}}</h1>
   <div class="row">
-      <div class="col-lg-12">
-        <form action="/update_book_library/{{this.book_id}}/{{this.library_id}}" method="post">
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Book:</span>
-            <input type="text" class="form-control" name="book_to_update" value="{{this.book_id}}" hidden>
-            <input type="text" class="form-control" name="" value="{{this.book_name}}">
-            <span class="input-group-addon" id="basic-addon1">Library:</span>
-            <select class="custom-select" name="library_to_update">
-              <option selected>Current: {{this.library_name}}</option>
-              {{{ list this.libraries }}}
-            </select>
-            <input type="submit" class="btn btn-warning" value="Update">
-            </form>
-            <form action="/delete_book_library/{{this.book_id}}/{{this.library_id}}" method="post">
-              <input type="submit" class="btn btn-danger" value="Delete">
-            </form>
-        </div>
+    <div class="col-lg-12">
+      <form action="/add_book_library" method="post">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Book:</span>
+          <input type="text" class="form-control" name="book_id" value="{{book.book_id}}" hidden>
+          <input type="text" class="form-control" name="" value="{{book.book_name}}" readonly>
+          <span class="input-group-addon" id="basic-addon1">Library:</span>
+          <select class="custom-select" name="library_to_add">
+            {{#each library}}
+              <option value="{{this.library_id}}">{{this.library_name}}</option>
+            {{/each}}
+          </select>
+          <input type="submit" class="btn btn-success" value="Insert">
+      </div>
+    </form>
     </div>
   </div>
-{{/each}}
+
+  {{#each items}}
+    <div class="row">
+        <div class="col-lg-12">
+          <form action="/update_book_library/{{this.book_id}}/{{this.library_id}}" method="post">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Book:</span>
+              <input type="text" class="form-control" name="book_to_update" value="{{this.book_id}}" hidden>
+              <input type="text" class="form-control" name="" value="{{this.book_name}}" readonly>
+              <span class="input-group-addon" id="basic-addon1">Library:</span>
+              <select class="custom-select" name="library_to_update">
+                <option selected>Current: {{this.library_name}}</option>
+                {{{ list this.libraries }}}
+              </select>
+              <input type="submit" class="btn btn-warning" value="Update">
+              </form>
+              <form action="/delete_book_library/{{this.book_id}}/{{this.library_id}}" method="post">
+                <input type="submit" class="btn btn-danger" value="Delete">
+              </form>
+          </div>
+      </div>
+    </div>
+  {{/each}}
+{{/if}}

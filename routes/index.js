@@ -9,27 +9,35 @@ const fs = require('fs');
 const app = require('../app');
 ////////////////////MAIN///////////////////////////
 router.get('/', (req, res, next) =>  {
-  res.render('index', {admin: req.app.get('admin')});
+  res.render('index', {admin: req.session.user ? true : false});
 });
 router.post('/sign_in', (req, res, next) => {
   controller.admin
     .get([req.body.admin, req.body.password])
     .then(result => {
-      result[0][0]['exist'] == 1 ? req.app.set('admin', true) : 0
+      console.log(result[0][0]);
+      req.session.user = result[0][0];
+      console.log(req.session.user);
+      res.redirect('/');
     })
     .catch((err) => res.send('error', {message: err.message, error: err}));
-  res.redirect('/');
 });
 router.post('/logout', (req, res, next) => {
-  req.app.set('admin', false);
-  res.redirect('/');
+  req.session.destroy(err => {
+    if (err) res.render('error', {message: err.message, error: err});
+    else res.redirect('/');
+  });
 });
 /////////////////TABLE TYPE/////////////////////////
 router.get('/type_editor', (req, res, next) => {
   controller.type
     .getAll()
-    .then((result) => res.render('tables/type_editor', {items: result[0], table: 'type'}))
-    .catch((err) => res.send('error', {message: err.message, error: err}));
+    .then((result) => res.render('tables/type_editor', {
+      items: result[0],
+      table: 'type',
+      admin: req.session.user ? true : false
+    }))
+    .catch((err) => res.render('error', {message: err.message, error: err}));
 });
 router.post('/add_type', (req, res, next) => {
   req.body.name != '' ? execute(res, 'type', 'add', [req.body.name]) : res.redirect('tables/type_editor');
@@ -44,8 +52,12 @@ router.post('/delete_type/:id', (req, res, next) => {
 router.get('/rubric_editor', (req, res, next) => {
   controller.rubric
     .getAll()
-    .then((result) => res.render('tables/rubric_editor', {items: result[0], table: 'rubric'}))
-    .catch((err) => res.send('error', {message: err.message, error: err}));
+    .then((result) => res.render('tables/rubric_editor', {
+      items: result[0],
+      table: 'rubric',
+      admin: req.session.user ? true : false
+    }))
+    .catch((err) => res.render('error', {message: err.message, error: err}));
 });
 router.post('/add_rubric', (req, res, next) => {
   req.body.name != '' ? execute(res, 'rubric', 'add', [req.body.name]) : res.redirect('tables/rubric_editor');
@@ -60,8 +72,12 @@ router.post('/delete_rubric/:id', (req, res, next) => {
 router.get('/publisher_editor', (req, res, next) => {
   controller.publisher
     .getAll()
-    .then((result) => res.render('tables/publisher_editor', {items: result[0], table: 'publisher'}))
-    .catch((err) => res.send('error', {message: err.message, error: err}));
+    .then((result) => res.render('tables/publisher_editor', {
+      items: result[0],
+      table: 'publisher',
+      admin: req.session.user ? true : false
+    }))
+    .catch((err) => res.render('error', {message: err.message, error: err}));
 });
 router.post('/add_publisher', (req, res, next) => {
   req.body.name != '' ? execute(res, 'publisher', 'add', [req.body.name]) : res.redirect('tables/publisher_editor');
@@ -76,8 +92,12 @@ router.post('/delete_publisher/:id', (req, res, next) => {
 router.get('/category_editor', (req, res, next) => {
   controller.category
     .getAll()
-    .then((result) => res.render('tables/category_editor', {items: result[0], table: 'category'}))
-    .catch((err) => res.send('error', {message: err.message, error: err}));
+    .then((result) => res.render('tables/category_editor', {
+      items: result[0],
+      table: 'category',
+      admin: req.session.user ? true : false
+    }))
+    .catch((err) => res.render('error', {message: err.message, error: err}));
 });
 router.post('/add_category', (req, res, next) => {
   req.body.name != '' ? execute(res, 'category', 'add', [req.body.name]) : res.redirect('tables/category_editor');
@@ -92,8 +112,12 @@ router.post('/delete_category/:id', (req, res, next) => {
 router.get('/country_editor', (req, res, next) => {
   controller.country
     .getAll()
-    .then((result) => res.render('tables/country_editor', {items: result[0], table: 'country'}))
-    .catch((err) => res.send('error', {message: err.message, error: err}));
+    .then((result) => res.render('tables/country_editor', {
+      items: result[0],
+      table: 'country',
+      admin: req.session.user ? true : false
+    }))
+    .catch((err) => res.render('error', {message: err.message, error: err}));
 });
 router.post('/add_country', (req, res, next) => {
   req.body.name != '' ? execute(res, 'country', 'add', [req.body.name]) : res.redirect('tables/country_editor');
@@ -119,6 +143,7 @@ router.get('/author_editor', (req, res, next) =>  {
         author: authors,
         countries: countries,
         table: 'author',
+        admin: req.session.user ? true : false,
         helpers: {
           list: function (items) {
             var out = "";
@@ -130,7 +155,7 @@ router.get('/author_editor', (req, res, next) =>  {
         }
       })
     })
-    .catch(err => res.send('error', {message: err.message, error: err}));
+    .catch(err => res.render('error', {message: err.message, error: err}));
 });
 router.post('/add_author', (req, res, next) =>  {
     execute(res, 'author', 'add', [req.body.name, req.body.country]);
@@ -154,10 +179,10 @@ router.get('/library_editor', (req, res, next) =>  {
       res.render('tables/library_editor', {
         items: chunk,
         table: 'library',
-        admin: req.app.get('admin')
+        admin: req.session.user ? true : false
       });
     })
-    .catch((err) => res.send('error', {message: err.message, error: err}));
+    .catch((err) => res.render('error', {message: err.message, error: err}));
 });
 router.post('/add_library', (req, res, next) =>  {
   uploadImage(req, req.body.name)
@@ -220,7 +245,8 @@ router.get('/book_editor', (req, res, next) => {
       country: result[4][0],
       author: result[5][0],
       library: result[6][0],
-      book: chunk
+      book: chunk,
+      admin: req.session.user ? true : false
     });
   })
   .catch(err => res.render('error', {message: err.message, error: err}))
@@ -327,7 +353,7 @@ router.get('/update_form/:id', (req, res, next) => {
       country: result[4][0],
       author: result[5][0],
       library: result[6][0],
-      admin: req.app.get('admin'),
+      admin: req.session.user ? true : false,
       book: books.find(function(item){return item['book_id'] == req.params.id ? item : 0}),
       helpers: {
         list: function (items, url, id) {
@@ -364,6 +390,7 @@ router.get('/book_author_editor/:id', (req, res, next) => {
         book: books[0],
         items: books,
         author: result[1][0],
+        admin: req.session.user ? true : false,
         helpers: {
           list: function (items) {
             var out = "";
@@ -419,6 +446,7 @@ router.get('/book_library_editor/:id', (req, res, next) => {
         items: books,
         book: books[0],
         library: result[1][0],
+        admin: req.session.user ? true : false,
         helpers: {
           list: function (items) {
             var out = "";
@@ -474,6 +502,7 @@ router.get('/book_rubric_editor/:id', (req, res, next) => {
         items: books,
         book: books[0],
         rubric: result[1][0],
+        admin: req.session.user ? true : false,
         helpers: {
           list: function (items) {
             var out = "";

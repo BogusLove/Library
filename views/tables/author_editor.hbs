@@ -1,51 +1,53 @@
 <br>
-<h2>Table: {{table}}</h2>
-<br>
-<form action="/add_author" method="post" ref='uploadForm' encType="multipart/form-data">
-  <div class="row">
-    <div class="col-lg-8">
-      <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">New author:</span>
-          <input type="text" name="name" class="form-control">
-          <select class="custom-select" name="country">
-            <option selected>choose country</option>
-            {{# each countries}}
-              <option value="{{this.country_id}}">{{this.country_name}}</option>
-            {{/each}}
-          </select>
-          <div class="" style="width: 2px"></div>
-          <span class="input-group-btn">
-            <button class="btn btn-outline-success" type="submit">Insert</button>
-          </span>
-      </div>
-    </div>
-  </div>
-</form>
-<br>
-{{# if author}}
-  {{# each author}}
-  <form action="/update_author/{{this.author_id}}" method="post">
+{{#if admin}}
+  <h2>Table: {{table}}</h2>
+  <br>
+  <form action="/add_author" method="post" ref='uploadForm' encType="multipart/form-data">
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-8">
         <div class="input-group">
-            <input type="text" value="{{this.author_fullname}}" name="fullname_to_update" class="form-control">
-            <select class="custom-select" name="country_to_update">
-              <option value="" selected>Current: {{this.country_name}}</option>
-              {{{ list this.countries}}}
+          <span class="input-group-addon" id="basic-addon1">New author:</span>
+            <input type="text" name="name" class="form-control">
+            <select class="custom-select" name="country">
+              <option selected>choose country</option>
+              {{# each countries}}
+                <option value="{{this.country_id}}">{{this.country_name}}</option>
+              {{/each}}
             </select>
+            <div class="" style="width: 2px"></div>
             <span class="input-group-btn">
-              <button class="btn btn-outline-warning" type="submit">Update</button>
+              <button class="btn btn-success" type="submit">Insert</button>
             </span>
-            </form>
-            <form action="/delete_author/{{this.author_id}}" method="post">
-            <span class="input-group-btn">
-              <button class="btn btn-outline-danger" type="submit">Delete</button>
-            </span>
-            </form>
         </div>
       </div>
     </div>
-  {{/each}}
-{{else}}
-  <h2>Nothing to show</h2>
+  </form>
+  <br>
+  {{# if author}}
+    {{# each author}}
+    <form action="/update_author/{{this.author_id}}" method="post">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="input-group">
+              <input type="text" value="{{this.author_fullname}}" name="fullname_to_update" class="form-control">
+              <select class="custom-select" name="country_to_update">
+                <option value="" selected>Current: {{this.country_name}}</option>
+                {{{ list this.countries}}}
+              </select>
+              <span class="input-group-btn">
+                <button class="btn btn-warning" type="submit">Update</button>
+              </span>
+              </form>
+              <form action="/delete_author/{{this.author_id}}" method="post">
+              <span class="input-group-btn">
+                <button class="btn btn-danger" type="submit">Delete</button>
+              </span>
+              </form>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  {{else}}
+    <h2>Nothing to show</h2>
+  {{/if}}
 {{/if}}

@@ -258,7 +258,7 @@ const controllers = {
   admin: {
     get: function (param) {
       return sequelize
-        .query('select exists(select admin_id from admin where admin_name = :name and admin_password = :password) as exist;', {
+        .query('select admin_id as id, admin_name as name from admin where admin_name = :name and admin_password = :password;', {
           replacements: {
             name: param[0],
             password: param[1]
