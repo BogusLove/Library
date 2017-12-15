@@ -28,6 +28,34 @@ router.post('/logout', (req, res, next) => {
     else res.redirect('/');
   });
 });
+router.post('/search', (req, res, next) => {
+  const table = req.body.table;
+  const query = req.body.query;
+  if (table){
+    if (query){
+      controller[table]
+        .getByName(query)
+        .then(result => {
+          if (table == 'book'){
+            res.redirect('/update_form/' + result[0][0]['book_id']);
+          }
+          if (table == 'library') {
+            console.log(result[0][0]);
+            res.render('tables/update_library_form', {
+              items: result[0],
+              table: 'library',
+              admin: req.session.user ? true : false
+            });
+          }
+        })
+        .catch((err) => res.render('error', {message: err.message, error: err}));
+    } else {
+      res.redirect('/' + table + '_editor');
+    }
+  } else {
+    res.redirect('/');
+  }
+});
 /////////////////TABLE TYPE/////////////////////////
 router.get('/type_editor', (req, res, next) => {
   controller.type
@@ -262,7 +290,8 @@ router.post('/add_book', (req, res, next) => {
           req.body.category,
           img
         ])
-    ).then(result => {
+    )
+    .then(result => {
       const id = result[0];
       return Promise.all([
           promise(id, req.body.library, 'book_library'),

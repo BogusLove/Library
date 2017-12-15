@@ -51,6 +51,14 @@ const controllers = {
       return sequelize
         .query('select * from library;');
     },
+    getByName: function (param) {
+      return sequelize
+        .query('select * from library where library_name = :name;', {
+          replacements: {
+            name: param
+          }
+        });
+    },
     add: function (param) {
       return sequelize
         .query('insert into library(library_name, library_address, library_schedule, library_image) values(:name, :address, :schedule, :image)', {
@@ -85,12 +93,22 @@ const controllers = {
   book: {
     getMain: function () {
       return sequelize
-        .query('select book_id, book_name from book');
+        .query('select book_id, book_name from book;');
     },
     getByID: function (param) {
       return sequelize
-        .query('select * from book where book_id = :id', {
-          id: param[0]
+        .query('select * from book where book_id = :id;', {
+          replacements: {
+            id: param[0]
+          }
+        });
+    },
+    getByName: function (param) {
+      return sequelize
+        .query('select book_id from book where book_name = :name;', {
+          replacements: {
+            name: param
+          }
         });
     },
     getAll: function () {
