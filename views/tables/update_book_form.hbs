@@ -74,7 +74,7 @@
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Library:</span>
             <ul class="list-group">
-              {{{ list book.libraries}}}
+              {{{ list book.libraries '/book_library_editor/' book.book_id }}}
             </ul>
           </div>
         </div>
@@ -82,7 +82,7 @@
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Rubric:</span>
             <ul class="list-group">
-              {{{ list book.rubrics}}}
+              {{{ list book.rubrics '/book_rubric_editor/' book.book_id }}}
             </ul>
           </div>
         </div>

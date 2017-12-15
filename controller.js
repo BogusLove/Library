@@ -186,6 +186,10 @@ const controllers = {
     }
   },
   book_rubric: {
+    getAll: function () {
+      return sequelize
+        .query('select br.*, b.book_name, r.rubric_name from book_rubric br join book b on b.book_id = br.book_id join rubric r on r.rubric_id = br.rubric_id;');
+    },
     add: function (param) {
       return sequelize
         .query('insert into book_rubric(book_id, rubric_id) values(:book_id, :rubric_id)', {
@@ -194,9 +198,33 @@ const controllers = {
             rubric_id: param[1]
           }
         });
+    },
+    update: function (param) {
+      return sequelize
+        .query('update book_rubric set book_id = :new_book_id, rubric_id = :new_rubric_id where book_id = :book_id and rubric_id = :rubric_id', {
+          replacements: {
+            new_book_id: param[0],
+            new_rubric_id: param[1],
+            book_id: param[2],
+            rubric_id: param[3]
+          }
+        });
+    },
+    delete: function (param) {
+      return sequelize
+        .query('delete from book_rubric where book_id = :book_id and rubric_id = :rubric_id', {
+          replacements: {
+            book_id: param[0],
+            rubric_id: param[1]
+          }
+        });
     }
   },
   book_library: {
+    getAll: function () {
+      return sequelize
+        .query('select bl.*, b.book_name, l.library_name from book_library bl join book b on b.book_id = bl.book_id join library l on l.library_id = bl.library_id;');
+    },
     add: function (param) {
       return sequelize
         .query('insert into book_library(book_id, library_id) values(:book_id, :library_id)', {
@@ -205,6 +233,26 @@ const controllers = {
             library_id: param[1]
           }
       });
+    },
+    update: function (param) {
+      return sequelize
+        .query('update book_library set book_id = :new_book_id, library_id = :new_library_id where book_id = :book_id and library_id = :library_id', {
+          replacements: {
+            new_book_id: param[0],
+            new_library_id: param[1],
+            book_id: param[2],
+            library_id: param[3]
+          }
+        });
+    },
+    delete: function (param) {
+      return sequelize
+        .query('delete from book_library where book_id = :book_id and library_id = :library_id', {
+          replacements: {
+            book_id: param[0],
+            library_id: param[1]
+          }
+        });
     }
   }
 };

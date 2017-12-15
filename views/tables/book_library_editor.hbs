@@ -1,0 +1,24 @@
+<h1>{{table}}</h1>
+
+{{#each items}}
+  <div class="row">
+      <div class="col-lg-12">
+        <form action="/update_book_library/{{this.book_id}}/{{this.library_id}}" method="post">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Book:</span>
+            <input type="text" class="form-control" name="book_to_update" value="{{this.book_id}}" hidden>
+            <input type="text" class="form-control" name="" value="{{this.book_name}}">
+            <span class="input-group-addon" id="basic-addon1">Library:</span>
+            <select class="custom-select" name="library_to_update">
+              <option selected>Current: {{this.library_name}}</option>
+              {{{ list this.libraries }}}
+            </select>
+            <input type="submit" class="btn btn-warning" value="Update">
+            <form action="/delete_book_library/{{this.book_id}}/{{this.library_id}}" method="post">
+              <input type="submit" class="btn btn-danger" value="Delete">
+            </form>
+        </div>
+      </form>
+    </div>
+  </div>
+{{/each}}

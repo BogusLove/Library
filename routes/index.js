@@ -301,6 +301,7 @@ router.get('/update_form/:id', (req, res, next) => {
         book['book_id'] === library['book_id'] ? book['libraries'] = library['libraries'].split(',') : 0;
       });
     });
+    console.log(books);
     res.render('tables/update_book_form', {
       table: 'book',
       type: result[0][0],
@@ -342,7 +343,7 @@ router.get('/book_author_editor/:id', (req, res, next) => {
             var out = "";
             for(var i = 0, l = items.length; i<l; i++) {
               out = out + '<option value="' + items[i]['author_id'] + '">' + items[i]['author_fullname'] + '</option>';
-            }
+            };
             return out;
           }
         }
@@ -362,6 +363,86 @@ router.post('/update_book_author/:book_id/:author_id', (req, res, next) => {
 });
 router.post('/delete_book_author/:book_id/:author_id', (req, res, next) => {
   execute(res, 'book_author', 'delete', [req.params.book_id, req.params.author_id]);
+});
+/////////////////////BOOK_RUBRIC TABLE/////////////////////
+router.get('/book_library_editor/:id', (req, res, next) => {
+  Promise.all([
+    controller.book_library.getAll(),
+    controller.library.getAll()
+  ]).then(result => {
+      let books = result[0][0]
+        .filter(function(item){
+          return item['book_id'] == req.params.id ? item : 0
+        });
+      books.map(book => book['libraries'] = result[1][0]);
+      res.render('tables/book_library_editor', {
+        table: 'book_library',
+        items: books,
+        helpers: {
+          list: function (items) {
+            var out = "";
+            for(var i = 0, l = items.length; i<l; i++) {
+              out = out + '<option value="' + items[i]['library_id'] + '">' + items[i]['library_name'] + '</option>';
+            };
+            return out;
+          }
+        }
+      });
+    })
+    .catch(err => res.render('error', {message: err.message, error: err}));
+});
+router.post('/update_book_library/:book_id/:library_id', (req, res, next) => {
+  controller.book_library
+    .update([
+      req.body.book_to_update,
+      req.body.library_to_update,
+      req.params.book_id,
+      req.params.library_id
+  ]);
+  res.redirect('/book_library_editor/' + req.params.book_id);
+});
+router.post('/delete_book_library/:book_id/:library_id', (req, res, next) => {
+  execute(res, 'book_library', 'delete', [req.params.book_id, req.params.library_id]);
+});
+////////////////BOOK_RUBRIC TABLE//////////////////////////
+router.get('/book_rubric_editor/:id', (req, res, next) => {
+  Promise.all([
+    controller.book_rubric.getAll(),
+    controller.rubric.getAll()
+  ]).then(result => {
+      let books = result[0][0]
+        .filter(function(item){
+          return item['book_id'] == req.params.id ? item : 0
+        });
+      books.map(book => book['rubrics'] = result[1][0]);
+      res.render('tables/book_rubric_editor', {
+        table: 'book_rubric',
+        items: books,
+        helpers: {
+          list: function (items) {
+            var out = "";
+            for(var i = 0, l = items.length; i<l; i++) {
+              out = out + '<option value="' + items[i]['rubric_id'] + '">' + items[i]['rubric_name'] + '</option>';
+            };
+            return out;
+          }
+        }
+      });
+    })
+    .catch(err => res.render('error', {message: err.message, error: err}));
+});
+router.post('/update_rubric_author/:book_id/:rubric_id', (req, res, next) => {
+  controller.book_rubric
+    .update([
+      req.body.book_to_update,
+      req.body.rubric_to_update,
+      req.params.book_id,
+      req.params.rubric_id
+  ]);
+  res.redirect('/book_rubric_editor/' + req.params.book_id);
+});
+router.post('/delete_book_rubric/:book_id/:rubric_id', (req, res, next) => {
+  execute(res, 'book_rubric', 'delete', [req.params.book_id, req.params.rubric_id]);
 });
 ///////////////ADDITIONAL FUNCTIONS////////////////////////
 function execute(res, table, command, params) {
