@@ -1,5 +1,24 @@
 <h1>{{table}}</h1>
 
+<div class="row">
+  <div class="col-lg-8">
+    <form action="/add_book_author" method="post">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Book:</span>
+        <input type="text" class="form-control" name="book_id" value="{{book.book_id}}" hidden>
+        <input type="text" class="form-control" name="" value="{{book.book_name}}" readonly>
+        <span class="input-group-addon" id="basic-addon1">Author:</span>
+        <select class="custom-select" name="author_to_add">
+          {{#each author}}
+            <option value="{{this.author_id}}">{{this.author_fullname}}</option>
+          {{/each}}
+        </select>
+        <input type="submit" class="btn btn-success" value="Insert">
+    </div>
+  </form>
+  </div>
+</div>
+
 {{#each items}}
   <div class="row">
       <div class="col-lg-8">
@@ -7,18 +26,18 @@
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Book:</span>
             <input type="text" class="form-control" name="book_to_update" value="{{this.book_id}}" hidden>
-            <input type="text" class="form-control" name="" value="{{this.book_name}}">
+            <input type="text" class="form-control" name="" value="{{this.book_name}}" readonly>
             <span class="input-group-addon" id="basic-addon1">Author:</span>
             <select class="custom-select" name="author_to_update">
-              <option selected>Current: {{this.author_fullname}}</option>
+              <option selected value="{{this.author_id}}">Current: {{this.author_fullname}}</option>
               {{{ list this.authors }}}
             </select>
             <input type="submit" class="btn btn-warning" value="Update">
+            </form>
             <form action="/delete_book_author/{{this.book_id}}/{{this.author_id}}" method="post">
               <input type="submit" class="btn btn-danger" value="Delete">
             </form>
         </div>
-      </form>
     </div>
   </div>
 {{/each}}

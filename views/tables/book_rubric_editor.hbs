@@ -1,5 +1,25 @@
 <h1>{{table}}</h1>
 
+<div class="row">
+  <div class="col-lg-8">
+    <form action="/add_book_rubric" method="post">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Book:</span>
+        <input type="text" class="form-control" name="book_id" value="{{book.book_id}}" hidden>
+        <input type="text" class="form-control" name="" value="{{book.book_name}}" readonly>
+        <span class="input-group-addon" id="basic-addon1">Rubric:</span>
+        <select class="custom-select" name="rubric_to_add">
+          {{#each rubric}}
+            <option value="{{this.rubric_id}}">{{this.rubric_name}}</option>
+          {{/each}}
+        </select>
+        <input type="submit" class="btn btn-success" value="Insert">
+    </div>
+  </form>
+  </div>
+</div>
+
+
 {{#each items}}
   <div class="row">
       <div class="col-lg-12">
@@ -14,11 +34,11 @@
               {{{ list this.rubrics }}}
             </select>
             <input type="submit" class="btn btn-warning" value="Update">
+              </form>
             <form action="/delete_book_rubric/{{this.book_id}}/{{this.rubric_id}}" method="post">
               <input type="submit" class="btn btn-danger" value="Delete">
             </form>
         </div>
-      </form>
     </div>
   </div>
 {{/each}}

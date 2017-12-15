@@ -243,8 +243,7 @@ router.post('/add_book', (req, res, next) => {
 });
 router.post('/update_book/:id', (req, res, next) => {
   if (!req.files.image) {
-    console.log(req.body.current_image);
-    execute(res, 'book', 'update', [
+    controller.book.update([
       req.params.id,
       req.body.name_to_update,
       req.body.year_to_update,
@@ -252,19 +251,19 @@ router.post('/update_book/:id', (req, res, next) => {
       req.body.publisher_to_update,
       req.body.category_to_update,
       req.body.current_image
-    ]);
+    ]).then(result => res.redirect('/update_form/' + req.params.id));
   } else {
     uploadImage(req, req.body.name_to_update)
       .then(img => {
-        execute(res, 'book', 'update', [
+        controller.book.update([
           req.params.id,
           req.body.name_to_update,
           req.body.year_to_update,
           req.body.type_to_update,
           req.body.publisher_to_update,
           req.body.category_to_update,
-          img
-        ]);
+          req.body.current_image
+        ]).then(result => res.redirect('/update_form/' + req.params.id));
       })
       .catch(err => res.render('error', {message: err.message, error: err}));
   }
@@ -301,7 +300,6 @@ router.get('/update_form/:id', (req, res, next) => {
         book['book_id'] === library['book_id'] ? book['libraries'] = library['libraries'].split(',') : 0;
       });
     });
-    console.log(books);
     res.render('tables/update_book_form', {
       table: 'book',
       type: result[0][0],
@@ -337,7 +335,9 @@ router.get('/book_author_editor/:id', (req, res, next) => {
       books.map(book => book['authors'] = result[1][0]);
       res.render('tables/book_author_editor', {
         table: 'book_author',
+        book: books[0],
         items: books,
+        author: result[1][0],
         helpers: {
           list: function (items) {
             var out = "";
@@ -351,6 +351,14 @@ router.get('/book_author_editor/:id', (req, res, next) => {
     })
     .catch(err => res.render('error', {message: err.message, error: err}));
 });
+router.post('/add_book_author', (req, res, next) => {
+  controller.book_author
+    .add([
+      req.body.book_id,
+      req.body.author_to_add
+    ]);
+  res.redirect('/book_author_editor/' + req.body.book_id)
+});
 router.post('/update_book_author/:book_id/:author_id', (req, res, next) => {
   controller.book_author
     .update([
@@ -362,9 +370,14 @@ router.post('/update_book_author/:book_id/:author_id', (req, res, next) => {
   res.redirect('/book_author_editor/' + req.params.book_id);
 });
 router.post('/delete_book_author/:book_id/:author_id', (req, res, next) => {
-  execute(res, 'book_author', 'delete', [req.params.book_id, req.params.author_id]);
+  controller.book_author
+    .delete([
+      req.params.book_id,
+      req.params.author_id
+    ]);
+  res.redirect('/book_author_editor/' + req.params.book_id);
 });
-/////////////////////BOOK_RUBRIC TABLE/////////////////////
+/////////////////////BOOK_LIBRARY TABLE/////////////////////
 router.get('/book_library_editor/:id', (req, res, next) => {
   Promise.all([
     controller.book_library.getAll(),
@@ -378,6 +391,8 @@ router.get('/book_library_editor/:id', (req, res, next) => {
       res.render('tables/book_library_editor', {
         table: 'book_library',
         items: books,
+        book: books[0],
+        library: result[1][0],
         helpers: {
           list: function (items) {
             var out = "";
@@ -391,6 +406,14 @@ router.get('/book_library_editor/:id', (req, res, next) => {
     })
     .catch(err => res.render('error', {message: err.message, error: err}));
 });
+router.post('/add_book_library', (req, res, next) => {
+  controller.book_library
+    .add([
+      req.body.book_id,
+      req.body.library_to_add
+    ]);
+  res.redirect('/book_library_editor/' + req.body.book_id)
+});
 router.post('/update_book_library/:book_id/:library_id', (req, res, next) => {
   controller.book_library
     .update([
@@ -402,7 +425,12 @@ router.post('/update_book_library/:book_id/:library_id', (req, res, next) => {
   res.redirect('/book_library_editor/' + req.params.book_id);
 });
 router.post('/delete_book_library/:book_id/:library_id', (req, res, next) => {
-  execute(res, 'book_library', 'delete', [req.params.book_id, req.params.library_id]);
+  controller.book_library
+    .delete([
+      req.params.book_id,
+      req.params.library_id
+    ]);
+  res.redirect('/book_library_editor/' + req.params.book_id);
 });
 ////////////////BOOK_RUBRIC TABLE//////////////////////////
 router.get('/book_rubric_editor/:id', (req, res, next) => {
@@ -418,6 +446,8 @@ router.get('/book_rubric_editor/:id', (req, res, next) => {
       res.render('tables/book_rubric_editor', {
         table: 'book_rubric',
         items: books,
+        book: books[0],
+        rubric: result[1][0],
         helpers: {
           list: function (items) {
             var out = "";
@@ -431,6 +461,14 @@ router.get('/book_rubric_editor/:id', (req, res, next) => {
     })
     .catch(err => res.render('error', {message: err.message, error: err}));
 });
+router.post('/add_book_rubric', (req, res, next) => {
+  controller.book_rubric
+    .add([
+      req.body.book_id,
+      req.body.rubric_to_add
+    ]);
+  res.redirect('/book_rubric_editor/' + req.body.book_id);
+});
 router.post('/update_rubric_author/:book_id/:rubric_id', (req, res, next) => {
   controller.book_rubric
     .update([
@@ -442,7 +480,12 @@ router.post('/update_rubric_author/:book_id/:rubric_id', (req, res, next) => {
   res.redirect('/book_rubric_editor/' + req.params.book_id);
 });
 router.post('/delete_book_rubric/:book_id/:rubric_id', (req, res, next) => {
-  execute(res, 'book_rubric', 'delete', [req.params.book_id, req.params.rubric_id]);
+  controller.book_rubric
+    .delete([
+      req.params.book_id,
+      req.params.rubric_id
+    ]);
+  res.redirect('/book_rubric_editor/' + req.params.book_id);
 });
 ///////////////ADDITIONAL FUNCTIONS////////////////////////
 function execute(res, table, command, params) {
