@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "8"
 before_install:
-  - npm i -g npm 3.5.2
+  - npm i -g npm@3
   - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
   - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
 install:
