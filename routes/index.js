@@ -15,9 +15,7 @@ router.post('/sign_in', (req, res, next) => {
   controller.admin
     .get([req.body.admin, req.body.password])
     .then(result => {
-      console.log(result[0][0]);
       req.session.user = result[0][0];
-      console.log(req.session.user);
       res.redirect('/');
     })
     .catch((err) => res.send('error', {message: err.message, error: err}));
@@ -30,8 +28,9 @@ router.post('/logout', (req, res, next) => {
 });
 router.post('/search', (req, res, next) => {
   const table = req.body.table;
+
   const query = req.body.query;
-  if (table){
+  if (table && table == 'library' || table == 'book'){
     if (query){
       controller[table]
         .getByName(query)
