@@ -28,7 +28,6 @@ router.post('/logout', (req, res, next) => {
 });
 router.post('/search', (req, res, next) => {
   const table = req.body.table;
-
   const query = req.body.query;
   if (table && table == 'library' || table == 'book'){
     if (query){

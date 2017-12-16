@@ -20,20 +20,6 @@ describe('/', () => {
   });
 });
 
-describe('/sign_in', () => {
-  it('it should return success POST request', (done) => {
-    chai
-      .request(app)
-      .post('/sign_in')
-      .send({admin: '1234', password: '1234'})
-      .end((err, res) => {
-        expect(err).to.be.null;
-        expect(res).to.have.status(200);
-        done();
-      });
-  });
-});
-
 describe('/logout', () => {
   it('it should return success POST request', (done) => {
     chai
