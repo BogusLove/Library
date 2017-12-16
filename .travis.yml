@@ -1,22 +1,22 @@
 language: node_js
-
 node_js:
-  - "4"
-
+  - "iojs"
+  - "8"
 before_install:
   - npm i -g npm@version-number
-
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
 install:
   - npm install
-
 cache:
   directories:
     - "node_modules"
-
 services:
   - mysql
-  test:
+test:
   adapter: mysql2
-  database: library
+  database: test
   username: root
   encoding: utf8
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
