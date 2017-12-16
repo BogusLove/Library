@@ -56,7 +56,7 @@ router.post('/search', (req, res, next) => {
     res.redirect('/');
   }
 });
-/////////////////TABLE TYPE/////////////////////////
+/////////////////TABLE TYPE////////////////////////
 router.get('/type_editor', (req, res, next) => {
   controller.type
     .getAll()
