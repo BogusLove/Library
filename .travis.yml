@@ -9,8 +9,6 @@ before_install:
   - "test $TRAVIS_NODE_VERSION != '0.8' || npm rm --save-dev istanbul"
 install:
   - npm install
-before_script:
-- "mysql -e 'create database test; select version();'"
 script:
   - "npm test"
 sudo: false
