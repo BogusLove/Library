@@ -13,23 +13,12 @@ before_script:
 - "mysql -e 'create database test; select version();'"
 script:
   - "npm test"
-matrix:
-  include:
-    - node_js: '8'
-      env: MYSQL_TYPE=mysql MYSQL_HOST=localhost MYSQL_DATABASE=node_mysql MYSQL_USER=root MYSQL_PASSWORD=
-      addons: {mysql: '5.6.2'}
-  allow_failures:
-      - node_js: '8'
-      env: MYSQL_TYPE=mysql MYSQL_HOST=localhost MYSQL_DATABASE=node_mysql MYSQL_USER=root MYSQL_PASSWORD=
-      addons: {mysql: '5.6.2'}
 sudo: false
 cache:
   directories:
     - "node_modules"
 services:
   - mysql
-env:
-  - MYSQL_TYPE=mysql MYSQL_HOST=localhost MYSQL_DATABASE=test MYSQL_USER=root MYSQL_PASSWORD=
 test:
   adapter: mysql2
   database: test
