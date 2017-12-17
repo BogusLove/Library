@@ -7,6 +7,8 @@ install:
   - npm install
 test_script:
   - "npm test"
+after_script:
+  - istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage
 cache:
   directories:
     - "node_modules"
