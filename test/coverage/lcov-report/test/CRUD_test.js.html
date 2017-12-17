@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">11.11% </span>
+        <span class="strong">77.78% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>2/18</span>
+        <span class='fraction'>7/9</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -32,16 +32,16 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/6</span>
+        <span class='fraction'>0/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">11.11% </span>
+        <span class="strong">77.78% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>2/18</span>
+        <span class='fraction'>7/9</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -70,67 +70,76 @@
 25
 26
 27
-28</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+28
+29
+30
+31</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict'
-var expect = require('expect.js');
+const chai = require('chai');
+const chaiAsPromised = require("chai-as-promised");
+const expect = chai.expect;
+const crud = require('../CRUD');
+const testCRUD = new crud('test');
 &nbsp;
-describe('CRUD', <span class="fstat-no" title="function not covered" >function() {</span>
-<span class="cstat-no" title="statement not covered" >  describe('Object equal', <span class="fstat-no" title="function not covered" >function() {</span></span>
-<span class="cstat-no" title="statement not covered" >    it('should return equal string', <span class="fstat-no" title="function not covered" >function() {</span></span>
-<span class="cstat-no" title="statement not covered" >      const crud = require('../CRUD');</span>
-<span class="cstat-no" title="statement not covered" >      let testCRUD = new crud('test');</span>
-<span class="cstat-no" title="statement not covered" >      expect(testCRUD.table_id).to.be('test_id');</span>
-<span class="cstat-no" title="statement not covered" >      expect(testCRUD.table_name).to.be('test_name');</span>
-    });
+chai.use(chaiAsPromised);
+&nbsp;
+describe('getAll', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >  it('should return Promise type', <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    expect(testCRUD.getAll().then).to.be.a('function');</span>
   });
 });
+// describe('add', function() {
+//   it('should return equal string', function() {
+//     expect(testCRUD.add().then).to.be.a('function');
+//   });
+// });
+// describe('update', function() {
+//   it('should return equal string', function() {
+//     expect(testCRUD.update([]).then).to.be.a('function');
+//   });
+// });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >describe('CRUD', <span class="fstat-no" title="function not covered" >function() {</span></span>
-<span class="cstat-no" title="statement not covered" >  describe('Promise equal', <span class="fstat-no" title="function not covered" >function() {</span></span>
-<span class="cstat-no" title="statement not covered" >    it('should return Promise type', <span class="fstat-no" title="function not covered" >function() {</span></span>
-<span class="cstat-no" title="statement not covered" >      const crud = require('../CRUD');</span>
-<span class="cstat-no" title="statement not covered" >      let testCRUD = new crud('test');</span>
-<span class="cstat-no" title="statement not covered" >      const func = ['getAll', 'add', 'update', 'delete'];</span>
-<span class="cstat-no" title="statement not covered" >      expect(testCRUD[func[0]]().then).to.be.a('function');</span>
-<span class="cstat-no" title="statement not covered" >      expect(testCRUD[func[1]]().then).to.be.a('function');</span>
-<span class="cstat-no" title="statement not covered" >      expect(testCRUD[func[2]]([]).then).to.be.a('function');</span>
-<span class="cstat-no" title="statement not covered" >      expect(testCRUD[func[3]]([]).then).to.be.a('function');</span>
-    });
-  });
-});
+// describe('delete', function() {
+//   it('should return equal string', function() {
+//     expect(testCRUD.delete().then).to.be.a('function');
+//   });
+// });
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Dec 17 2017 12:46:17 GMT+0200 (EET)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Dec 17 2017 15:24:01 GMT+0200 (EET)
 </div>
 </div>
 <script src="../prettify.js"></script>

@@ -1,27 +1,32 @@
 'use strict'
-var expect = require('expect.js');
+const chai = require('chai');
+const chaiAsPromised = require("chai-as-promised");
+const expect = chai.expect;
+const crud = require('../CRUD');
+const testCRUD = new crud('test');
 
-describe('CRUD', function() {
-  describe('Object equal', function() {
-    it('should return equal string', function() {
-      const crud = require('../CRUD');
-      let testCRUD = new crud('test');
-      expect(testCRUD.table_id).to.be('test_id');
-      expect(testCRUD.table_name).to.be('test_name');
-    });
+chai.use(chaiAsPromised);
+
+describe('getAll', function() {
+  it('should return Promise type', function() {
+    expect(testCRUD.getAll().then).to.be.a('function');
   });
 });
 
-describe('CRUD', function() {
-  describe('Promise equal', function() {
-    it('should return Promise type', function() {
-      const crud = require('../CRUD');
-      let testCRUD = new crud('test');
-      const func = ['getAll', 'add', 'update', 'delete'];
-      expect(testCRUD[func[0]]().then).to.be.a('function');
-      expect(testCRUD[func[1]]().then).to.be.a('function');
-      expect(testCRUD[func[2]]([]).then).to.be.a('function');
-      expect(testCRUD[func[3]]([]).then).to.be.a('function');
-    });
-  });
-});
+// describe('add', function() {
+//   it('should return equal string', function() {
+//     expect(testCRUD.add().then).to.be.a('function');
+//   });
+// });
+
+// describe('update', function() {
+//   it('should return equal string', function() {
+//     expect(testCRUD.update([]).then).to.be.a('function');
+//   });
+// });
+
+// describe('delete', function() {
+//   it('should return equal string', function() {
+//     expect(testCRUD.delete().then).to.be.a('function');
+//   });
+// });
