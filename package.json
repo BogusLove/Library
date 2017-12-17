@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha"
+    "test": "mocha",
+    "cover": "istanbul cover _mocha"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -18,8 +19,6 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "hbs": "~4.0.1",
-    "istanbul": "^0.4.5",
-    "mocha": "^4.0.1",
     "morgan": "~1.9.0",
     "mysql2": "^1.5.1",
     "nodemon": "^1.12.4",
@@ -29,5 +28,9 @@
   "main": "app.js",
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "mocha": "^4.0.1"
+  }
 }
