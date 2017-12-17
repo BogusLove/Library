@@ -3,8 +3,7 @@ node_js:
   - "8"
 before_install:
   - npm i -g npm@3
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
-  install:
+install:
   - npm install
 test_script:
   - "npm test"
@@ -13,10 +12,5 @@ cache:
     - "node_modules"
 services:
   - mysql
-test:
-  adapter: mysql2
-  database: test
-  username: root
-  encoding: utf8
 after_success:
   - istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage
