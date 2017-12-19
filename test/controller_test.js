@@ -1,14 +1,14 @@
 var expect = require('expect.js');
 
 
-describe('Index', function() {
+describe('1', function() {
   it('should return object', function() {
     const index = require('../routes/index');
     expect(index).to.have.property("params");
   });
 });
 
-describe('Controller', function() {
+describe('2', function() {
   describe('Object equal', function() {
     it('should return object', function() {
       const contr = require('../controller');
@@ -17,7 +17,7 @@ describe('Controller', function() {
   });
 });
 
-describe('Controller', function() {
+describe('3', function() {
   describe('CRUD_classes', function() {
     it('should return a similar parent', function() {
       const contr = require('../controller');
@@ -29,7 +29,7 @@ describe('Controller', function() {
   });
 });
 
-describe('Controller', function() {
+describe('4', function() {
   describe('Author methods', function() {
     it('should return an equal methods', function() {
       const author = require('../controller').author;
@@ -39,7 +39,7 @@ describe('Controller', function() {
   });
 });
 
-describe('Controller', function() {
+describe('5', function() {
   describe('Library methods', function() {
     it('should return an equal methods', function() {
       const library = require('../controller').library;
@@ -49,7 +49,7 @@ describe('Controller', function() {
   });
 });
 
-describe('Controller', function() {
+describe('6', function() {
   describe('Book sample methods', function() {
     it('should return an equal methods', function() {
       const book = require('../controller').book;
@@ -59,7 +59,7 @@ describe('Controller', function() {
   });
 });
 
-describe('Controller', function() {
+describe('7', function() {
   describe('Book_* methods', function() {
     it('should return an equal methods', function() {
       const contr = require('../controller');
@@ -73,7 +73,7 @@ describe('Controller', function() {
   });
 });
 
-describe('Controller', function() {
+describe('8', function() {
   describe('Admin methods', function() {
     it('should return an equal methods', function() {
       const admin = require('../controller').admin;
