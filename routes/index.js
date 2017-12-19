@@ -1,5 +1,6 @@
 'use strict'
 const express = require('express');
+/* istanbul ignore next */
 const router = express.Router();
 const controller = require('../controller');
 const DB_config = require('../config');
