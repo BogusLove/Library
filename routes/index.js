@@ -8,6 +8,7 @@ const expressHbs = require('express-handlebars');
 const fs = require('fs');
 const app = require('../app');
 ////////////////////MAIN///////////////////////////
+/* istanbul ignore next */
 router.get('/', (req, res, next) =>  {
   res.render('index', {admin: req.session.user ? true : false});
 });
