@@ -58,6 +58,7 @@ router.post('/search', (req, res, next) => {
   }
 });
 /////////////////TABLE TYPE////////////////////////
+/* istanbul ignore next */
 router.get('/type_editor', (req, res, next) => {
   controller.type
     .getAll()
@@ -78,6 +79,7 @@ router.post('/delete_type/:id', (req, res, next) => {
   execute(res, 'type', 'delete', [req.params.id]);
 });
 //////////////////TABLE RUBRIC///////////////////////////
+/* istanbul ignore next */
 router.get('/rubric_editor', (req, res, next) => {
   controller.rubric
     .getAll()
@@ -98,6 +100,7 @@ router.post('/delete_rubric/:id', (req, res, next) => {
   execute(res, 'rubric', 'delete', [req.params.id]);
 });
 ////////////////////TABLE PUBLISHER////////////////////////////
+/* istanbul ignore next */
 router.get('/publisher_editor', (req, res, next) => {
   controller.publisher
     .getAll()
@@ -118,6 +121,7 @@ router.post('/delete_publisher/:id', (req, res, next) => {
   execute(res, 'publisher', 'delete', [req.params.id]);
 });
 /////////////////////TABLE CATEGORY//////////////////////////
+/* istanbul ignore next */
 router.get('/category_editor', (req, res, next) => {
   controller.category
     .getAll()
@@ -138,6 +142,7 @@ router.post('/delete_category/:id', (req, res, next) => {
   execute(res, 'category', 'delete', [req.params.id]);
 });
 ////////////////////TABLE COUNTRY////////////////////////////
+/* istanbul ignore next */
 router.get('/country_editor', (req, res, next) => {
   controller.country
     .getAll()
@@ -585,7 +590,7 @@ function execute(res, table, command, params) {
     .then(() => res.redirect('/' + table +'_editor'))
     .catch(err => res.render('error', {message: err.message, error: err}));
 }
-
+/* istanbul ignore next */
 function uploadImage(req, name) {
   let path = '';
   const base = './public/images/';
