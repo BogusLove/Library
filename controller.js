@@ -2,7 +2,7 @@ const CRUD = require("./CRUD");
 const Sequelize = require("sequelize");
 const DB_config = require("./config");
 const sequelize = new Sequelize(DB_config);
-
+/* istanbul ignore next */
 const controllers = {
   type: new CRUD("type"),
   rubric: new CRUD("rubric"),
