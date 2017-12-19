@@ -28,6 +28,7 @@ router.post('/logout', (req, res, next) => {
     else res.redirect('/');
   });
 });
+/* istanbul ignore next */
 router.post('/search', (req, res, next) => {
   const table = req.body.table;
   const query = req.body.query;
@@ -157,6 +158,7 @@ router.post('/delete_country/:id', (req, res, next) => {
   execute(res, 'country', 'delete', [req.params.id]);
 });
 //////////////////AUTHOR TABLE////////////////////////
+/* istanbul ignore next */
 router.get('/author_editor', (req, res, next) =>  {
   Promise.all([
     controller.author.getAll(),
@@ -195,6 +197,7 @@ router.post('/delete_author/:id', (req, res, next) =>  {
   execute(res, 'author', 'delete', [req.params.id]);
 });
 //////////////////LIBRARY TABLE///////////////////
+/* istanbul ignore next */
 router.get('/library_editor', (req, res, next) =>  {
   controller.library
     .getAll()
@@ -230,6 +233,7 @@ router.post('/delete_library/:id', (req, res, next) =>  {
   execute(res, 'library', 'delete', [req.params.id]);
 });
 //////////////////BOOK TABLE////////////////////
+/* istanbul ignore next */
 router.get('/book_editor', (req, res, next) => {
   Promise.all([
     controller.type.getAll(),
@@ -404,6 +408,7 @@ router.get('/update_form/:id', (req, res, next) => {
   })
 });
 /////////////////BOOK_AUTHOR TABLE/////////////////////
+/* istanbul ignore next */
 router.get('/book_author_editor/:id', (req, res, next) => {
   Promise.all([
     controller.book_author.getAll(),
@@ -460,6 +465,7 @@ router.post('/delete_book_author/:book_id/:author_id', (req, res, next) => {
   res.redirect('/book_author_editor/' + req.params.book_id);
 });
 /////////////////////BOOK_LIBRARY TABLE/////////////////////
+/* istanbul ignore next */
 router.get('/book_library_editor/:id', (req, res, next) => {
   Promise.all([
     controller.book_library.getAll(),
@@ -516,6 +522,7 @@ router.post('/delete_book_library/:book_id/:library_id', (req, res, next) => {
   res.redirect('/book_library_editor/' + req.params.book_id);
 });
 ////////////////BOOK_RUBRIC TABLE//////////////////////////
+/* istanbul ignore next */
 router.get('/book_rubric_editor/:id', (req, res, next) => {
   Promise.all([
     controller.book_rubric.getAll(),
@@ -572,6 +579,7 @@ router.post('/delete_book_rubric/:book_id/:rubric_id', (req, res, next) => {
   res.redirect('/book_rubric_editor/' + req.params.book_id);
 });
 ///////////////ADDITIONAL FUNCTIONS////////////////////////
+/* istanbul ignore next */
 function execute(res, table, command, params) {
   controller[table][command](params)
     .then(() => res.redirect('/' + table +'_editor'))
