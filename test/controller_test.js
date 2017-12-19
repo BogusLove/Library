@@ -1,5 +1,13 @@
 var expect = require('expect.js');
 
+
+describe('Object equal', function() {
+  it('should return object', function() {
+    const contr = require('../routes/index');
+    expect(contr).to.not.be.empty();
+  });
+});
+
 describe('Controller', function() {
   describe('Object equal', function() {
     it('should return object', function() {
