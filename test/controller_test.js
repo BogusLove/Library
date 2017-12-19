@@ -1,10 +1,17 @@
 var expect = require('expect.js');
 
 
-describe('Object equal', function() {
+describe('Index', function() {
   it('should return object', function() {
-    const contr = require('../routes/index');
-    expect(contr).to.not.be.empty();
+    const index = require('../routes/index');
+    expect(index).to.have.property("params");
+  });
+});
+
+describe('Index', function() {
+  it('should return object', function() {
+    const index = require('../routes/index');
+    expect(index).to.have.property("strict");
   });
 });
 
