@@ -7,18 +7,18 @@ const chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
 
-describe('/', () => {
-  it('it should return success GET request', (done) => {
-    chai
-      .request(app)
-      .get('/')
-      .end((err, res) => {
-        expect(err).to.be.null;
-        expect(res).to.have.status(200);
-        done();
-      });
-  });
-});
+// describe('/', () => {
+//   it('it should return success GET request', (done) => {
+//     chai
+//       .request(app)
+//       .get('/')
+//       .end((err, res) => {
+//         expect(err).to.be.null;
+//         expect(res).to.have.status(200);
+//         done();
+//       });
+//   });
+// });
 //
 // describe('/logout', () => {
 //   it('it should return success POST request', (done) => {
