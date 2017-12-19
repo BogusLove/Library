@@ -7,11 +7,11 @@ const testCRUD = new crud('test');
 
 chai.use(chaiAsPromised);
 
-describe('getAll', function() {
-  it('should return Promise type', function() {
-    expect(testCRUD.getAll().then).to.be.a('function');
-  });
-});
+// describe('getAll', function() {
+//   it('should return Promise type', function() {
+//     expect(testCRUD.getAll().then).to.be.a('function');
+//   });
+// });
 
 // describe('add', function() {
 //   it('should return equal string', function() {
