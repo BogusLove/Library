@@ -8,13 +8,6 @@ describe('Index', function() {
   });
 });
 
-describe('Index', function() {
-  it('should return object', function() {
-    const index = require('../routes/index');
-    expect(index).to.have.property("strict");
-  });
-});
-
 describe('Controller', function() {
   describe('Object equal', function() {
     it('should return object', function() {
