@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const DB_config = require("./test_config");
+const DB_config = require("./config");
 const sequelize = new Sequelize(DB_config);
 function CRUD(table) {
   this.table = table;
