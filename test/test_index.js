@@ -1,17 +1,17 @@
-'use strict'
+"use strict"
 
-const app = require('../app');
-const chai = require('chai');
+const app = require("../app");
+const chai = require("chai");
 const expect = chai.expect;
-const chaiHttp = require('chai-http');
+const chaiHttp = require("chai-http");
 
 chai.use(chaiHttp);
 
-// describe('/', () => {
-//   it('it should return success GET request', (done) => {
+// describe("/", () => {
+//   it("it should return success GET request", (done) => {
 //     chai
 //       .request(app)
-//       .get('/')
+//       .get("/")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -20,11 +20,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/logout', () => {
-//   it('it should return success POST request', (done) => {
+// describe("/logout", () => {
+//   it("it should return success POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/logout')
+//       .post("/logout")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -33,12 +33,12 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/search', () => {
-//   it('it should return success POST request', (done) => {
+// describe("/search", () => {
+//   it("it should return success POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/search')
-//       .send({table: '', query: ''})
+//       .post("/search")
+//       .send({table: "", query: ""})
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -47,11 +47,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/type_editor', () => {
-//   it('it should return success GET request', (done) => {
+// describe("/type_editor", () => {
+//   it("it should return success GET request", (done) => {
 //     chai
 //       .request(app)
-//       .get('/type_editor')
+//       .get("/type_editor")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -60,11 +60,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/add_type', () => {
-//   it('it should return success POST request', (done) => {
+// describe("/add_type", () => {
+//   it("it should return success POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/add_type')
+//       .post("/add_type")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -73,11 +73,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/update_type/:id', () => {
-//   it('it should return not found GET request', (done) => {
+// describe("/update_type/:id", () => {
+//   it("it should return not found GET request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/update_type/' + null)
+//       .post("/update_type/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -86,11 +86,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/delete_type/:id', () => {
-//   it('it should return not found GET request', (done) => {
+// describe("/delete_type/:id", () => {
+//   it("it should return not found GET request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/delete_type/' + null)
+//       .post("/delete_type/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -99,11 +99,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/rubric_editor', () => {
-//   it('it should return success GET request', (done) => {
+// describe("/rubric_editor", () => {
+//   it("it should return success GET request", (done) => {
 //     chai
 //       .request(app)
-//       .get('/rubric_editor')
+//       .get("/rubric_editor")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -112,11 +112,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/add_rubric', () => {
-//   it('it should return success POST request', (done) => {
+// describe("/add_rubric", () => {
+//   it("it should return success POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/add_rubric')
+//       .post("/add_rubric")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -125,11 +125,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/update_rubric/:id', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/update_rubric/:id", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/update_rubric/' + null)
+//       .post("/update_rubric/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -138,11 +138,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/delete_rubric/:id', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/delete_rubric/:id", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/delete_rubric/' + null)
+//       .post("/delete_rubric/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -151,11 +151,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/publisher_editor', () => {
-//   it('it should return not found GET request', (done) => {
+// describe("/publisher_editor", () => {
+//   it("it should return not found GET request", (done) => {
 //     chai
 //       .request(app)
-//       .get('/publisher_editor')
+//       .get("/publisher_editor")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -164,11 +164,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/add_publisher', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/add_publisher", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/add_publisher')
+//       .post("/add_publisher")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -177,11 +177,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/update_publisher/:id', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/update_publisher/:id", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/update_publisher/' + null)
+//       .post("/update_publisher/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -190,11 +190,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/delete_publisher/:id', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/delete_publisher/:id", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/delete_publisher/' + null)
+//       .post("/delete_publisher/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -203,11 +203,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/category_editor', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/category_editor", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .get('/category_editor')
+//       .get("/category_editor")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -216,11 +216,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/add_category', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/add_category", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/add_category')
+//       .post("/add_category")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -229,11 +229,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/update_category/:id', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/update_category/:id", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/update_category/' + null)
+//       .post("/update_category/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -242,11 +242,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/delete_category/:id', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/delete_category/:id", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/delete_category/' + null)
+//       .post("/delete_category/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -255,11 +255,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/country_editor', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/country_editor", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .get('/country_editor')
+//       .get("/country_editor")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -268,11 +268,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/add_country', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/add_country", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/add_country')
+//       .post("/add_country")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -281,11 +281,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/update_country/:id', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/update_country/:id", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/update_country/' + null)
+//       .post("/update_country/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -294,11 +294,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/delete_country/:id', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/delete_country/:id", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/delete_country/' + null)
+//       .post("/delete_country/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -307,11 +307,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/author_editor', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/author_editor", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .get('/author_editor')
+//       .get("/author_editor")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -320,11 +320,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/add_author', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/add_author", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/add_author')
+//       .post("/add_author")
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -333,11 +333,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/update_author/:id', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/update_author/:id", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/update_author/' + null)
+//       .post("/update_author/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -346,11 +346,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/update_author/:id', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/update_author/:id", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/update_author/' + null)
+//       .post("/update_author/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);
@@ -359,11 +359,11 @@ chai.use(chaiHttp);
 //   });
 // });
 //
-// describe('/delete_author/:id', () => {
-//   it('it should return not found POST request', (done) => {
+// describe("/delete_author/:id", () => {
+//   it("it should return not found POST request", (done) => {
 //     chai
 //       .request(app)
-//       .post('/delete_author/' + null)
+//       .post("/delete_author/" + null)
 //       .end((err, res) => {
 //         expect(err).to.be.null;
 //         expect(res).to.have.status(200);

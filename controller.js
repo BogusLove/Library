@@ -113,7 +113,7 @@ const controllers = {
     },
     getAll: function () {
       return sequelize
-        .query("select book_id, book_name, book_year, book_image, t.*, p.*, c.* from book b join type t on t.type_id = b.book_type_id join publisher p on p.publisher_id = b.book_publisher_id join category c on c.category_id = b.book_category_id")
+        .query("select book_id, book_name, book_year, book_image, t.*, p.*, c.* from book b join type t on t.type_id = b.book_type_id join publisher p on p.publisher_id = b.book_publisher_id join category c on c.category_id = b.book_category_id");
     },
     getRubrics: function () {
       return sequelize

@@ -30,15 +30,15 @@ router.post("/logout", (req, res, next) => {
 router.post("/search", (req, res, next) => {
   const table = req.body.table;
   const query = req.body.query;
-  if (table && table == "library" || table == "book"){
+  if (table && table === "library" || table === "book"){
     if (query){
       controller[table]
         .getByName(query)
         .then(result => {
-          if (table == "book"){
+          if (table === "book"){
             res.redirect("/update_form/" + result[0][0]["book_id"]);
           }
-          if (table == "library") {
+          if (table === "library") {
             console.log(result[0][0]);
             res.render("tables/update_library_form", {
               items: result[0],
@@ -67,7 +67,7 @@ router.get("/type_editor", (req, res, next) => {
     .catch((err) => res.render("error", {message: err.message, error: err}));
 });
 router.post("/add_type", (req, res, next) => {
-  req.body.name != "" ? execute(res, "type", "add", [req.body.name]) : res.redirect("tables/type_editor");
+  req.body.name !== "" ? execute(res, "type", "add", [req.body.name]) : res.redirect("tables/type_editor");
 });
 router.post("/update_type/:id", (req, res, next) => {
   execute(res, "type", "update", [req.params.id, req.body.name_to_update]);
@@ -87,7 +87,7 @@ router.get("/rubric_editor", (req, res, next) => {
     .catch((err) => res.render("error", {message: err.message, error: err}));
 });
 router.post("/add_rubric", (req, res, next) => {
-  req.body.name != "" ? execute(res, "rubric", "add", [req.body.name]) : res.redirect("tables/rubric_editor");
+  req.body.name !== "" ? execute(res, "rubric", "add", [req.body.name]) : res.redirect("tables/rubric_editor");
 });
 router.post("/update_rubric/:id", (req, res, next) => {
   execute(res, "rubric", "update", [req.params.id, req.body.name_to_update]);
@@ -108,7 +108,7 @@ router.get("/publisher_editor", (req, res, next) => {
     .catch((err) => res.render("error", {message: err.message, error: err}));
 });
 router.post("/add_publisher", (req, res, next) => {
-  req.body.name != "" ? execute(res, "publisher", "add", [req.body.name]) : res.redirect("tables/publisher_editor");
+  req.body.name !== "" ? execute(res, "publisher", "add", [req.body.name]) : res.redirect("tables/publisher_editor");
 });
 router.post("/update_publisher/:id", (req, res, next) => {
   execute(res, "publisher", "update", [req.params.id, req.body.name_to_update]);
@@ -129,7 +129,7 @@ router.get("/category_editor", (req, res, next) => {
     .catch((err) => res.render("error", {message: err.message, error: err}));
 });
 router.post("/add_category", (req, res, next) => {
-  req.body.name != "" ? execute(res, "category", "add", [req.body.name]) : res.redirect("tables/category_editor");
+  req.body.name !== "" ? execute(res, "category", "add", [req.body.name]) : res.redirect("tables/category_editor");
 });
 router.post("/update_category/:id", (req, res, next) => {
   execute(res, "category", "update", [req.params.id, req.body.name_to_update]);
@@ -150,7 +150,7 @@ router.get("/country_editor", (req, res, next) => {
     .catch((err) => res.render("error", {message: err.message, error: err}));
 });
 router.post("/add_country", (req, res, next) => {
-  req.body.name != "" ? execute(res, "country", "add", [req.body.name]) : res.redirect("tables/country_editor");
+  req.body.name !== "" ? execute(res, "country", "add", [req.body.name]) : res.redirect("tables/country_editor");
 });
 router.post("/update_country/:id", (req, res, next) => {
   execute(res, "country", "update", [req.params.id, req.body.name_to_update]);
@@ -393,7 +393,7 @@ router.get("/update_form/:id", (req, res, next) => {
       author: result[5][0],
       library: result[6][0],
       admin: req.session.user ? true : false,
-      book: books.find(function(item){return item["book_id"] == req.params.id ? item : 0}),
+      book: books.find(function(item){return item["book_id"] === req.params.id ? item : 0}),
       helpers: {
         list: function (items, url, id) {
           var out = "";
@@ -419,12 +419,12 @@ router.get("/book_author_editor/:id", (req, res, next) => {
   Promise.all([
     controller.book_author.getAll(),
     controller.author.getMain()
-  ]).then(result => {
+  ]).then((result) => {
       let books = result[0][0]
         .filter(function(item){
-          return item["book_id"] == req.params.id ? item : 0
+          return item["book_id"] === req.params.id ? item : 0
         });
-      books.map(book => book["authors"] = result[1][0]);
+      books.map((book) => book["authors"] = result[1][0]);
       res.render("tables/book_author_editor", {
         table: "book_author",
         book: books[0],
@@ -442,7 +442,7 @@ router.get("/book_author_editor/:id", (req, res, next) => {
         }
       });
     })
-    .catch(err => res.render("error", {message: err.message, error: err}));
+    .catch((err) => res.render("error", {message: err.message, error: err}));
 });
 /* istanbul ignore next */
 router.post("/add_book_author", (req, res, next) => {
@@ -479,12 +479,12 @@ router.get("/book_library_editor/:id", (req, res, next) => {
   Promise.all([
     controller.book_library.getAll(),
     controller.library.getAll()
-  ]).then(result => {
+  ]).then((result) => {
       let books = result[0][0]
         .filter(function(item){
-          return item["book_id"] == req.params.id ? item : 0
+          return item["book_id"] === req.params.id ? item : 0
         });
-      books.map(book => book["libraries"] = result[1][0]);
+      books.map((book) => book["libraries"] = result[1][0]);
       res.render("tables/book_library_editor", {
         table: "book_library",
         items: books,
@@ -502,7 +502,7 @@ router.get("/book_library_editor/:id", (req, res, next) => {
         }
       });
     })
-    .catch(err => res.render("error", {message: err.message, error: err}));
+    .catch((err) => res.render("error", {message: err.message, error: err}));
 });
 /* istanbul ignore next */
 router.post("/add_book_library", (req, res, next) => {
@@ -539,12 +539,12 @@ router.get("/book_rubric_editor/:id", (req, res, next) => {
   Promise.all([
     controller.book_rubric.getAll(),
     controller.rubric.getAll()
-  ]).then(result => {
+  ]).then((result) => {
       let books = result[0][0]
         .filter(function(item){
-          return item["book_id"] == req.params.id ? item : 0
+          return item["book_id"] === req.params.id ? item : 0
         });
-      books.map(book => book["rubrics"] = result[1][0]);
+      books.map((book) => book["rubrics"] = result[1][0]);
       res.render("tables/book_rubric_editor", {
         table: "book_rubric",
         items: books,
@@ -562,7 +562,7 @@ router.get("/book_rubric_editor/:id", (req, res, next) => {
         }
       });
     })
-    .catch(err => res.render("error", {message: err.message, error: err}));
+    .catch((err) => res.render("error", {message: err.message, error: err}));
 });
 /* istanbul ignore next */
 router.post("/add_book_rubric", (req, res, next) => {
@@ -598,7 +598,7 @@ router.post("/delete_book_rubric/:book_id/:rubric_id", (req, res, next) => {
 function execute(res, table, command, params) {
   controller[table][command](params)
     .then(() => res.redirect("/" + table +"_editor"))
-    .catch(err => res.render("error", {message: err.message, error: err}));
+    .catch((err) => res.render("error", {message: err.message, error: err}));
 }
 /* istanbul ignore next */
 function uploadImage(req, name) {
@@ -616,7 +616,7 @@ function uploadImage(req, name) {
         else resolve(images + fileName);
       });
     });
-  } else return new Promise(resolve => {
+  } else return new Promise((resolve) => {
       resolve(images + "noImage.jpeg");
   });
 }
