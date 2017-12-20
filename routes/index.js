@@ -9,7 +9,6 @@ const expressHbs = require('express-handlebars');
 const fs = require('fs');
 const app = require('../app');
 ////////////////////MAIN///////////////////////////
-/* istanbul ignore next */
 router.get('/', (req, res, next) =>  {
   res.render('index', {admin: req.session.user ? true : false});
 });
@@ -28,7 +27,6 @@ router.post('/logout', (req, res, next) => {
     else res.redirect('/');
   });
 });
-/* istanbul ignore next */
 router.post('/search', (req, res, next) => {
   const table = req.body.table;
   const query = req.body.query;
@@ -58,7 +56,6 @@ router.post('/search', (req, res, next) => {
   }
 });
 /////////////////TABLE TYPE////////////////////////
-/* istanbul ignore next */
 router.get('/type_editor', (req, res, next) => {
   controller.type
     .getAll()
@@ -79,7 +76,6 @@ router.post('/delete_type/:id', (req, res, next) => {
   execute(res, 'type', 'delete', [req.params.id]);
 });
 //////////////////TABLE RUBRIC///////////////////////////
-/* istanbul ignore next */
 router.get('/rubric_editor', (req, res, next) => {
   controller.rubric
     .getAll()
