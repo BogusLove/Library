@@ -3,6 +3,8 @@ node_js:
   - "8"
 before_install:
   - npm i -g npm@3
+script:
+  - npm start
 cache:
   directories:
     - "node_modules"
