@@ -11,4 +11,10 @@ cache:
 services:
   - mysql
 after_success:
-- npm run coveralls
+  - npm run coveralls
+test:
+  adapter: mysql2
+  database: library
+  username: root
+  password: 13579ret
+  encoding: utf8
