@@ -1,6 +1,5 @@
 "use strict"
 const express = require("express");
-/* istanbul ignore next */
 const router = express.Router();
 const controller = require("../controller");
 const DB_config = require("../config");
@@ -8,6 +7,9 @@ const Sequelize = require("sequelize");
 const expressHbs = require("express-handlebars");
 const fs = require("fs");
 const app = require("../app");
+const execute = require('../methods').execute;
+const promise = require('../methods').promise;
+const uploadImage = require('../methods').uploadImage;
 ////////////////////MAIN///////////////////////////
 router.get("/", (req, res, next) =>  {
   res.render("index", {admin: req.session.user ? true : false});
@@ -309,18 +311,6 @@ router.post("/add_book", (req, res, next) => {
     })
     .then(result => res.redirect("/book_editor"))
     .catch(err => res.render("error", {message: err.message, error: err}));
-
-  function promise(book_id, items, table) {
-    let promises = [];
-    if (typeof(items) !== "string") {
-      items.forEach(item => {
-        promises.push(controller[table].add([book_id, item]));
-      });
-    } else {
-      promises.push(controller[table].add([book_id, items]));
-    }
-    return promises;
-  };
 });
 /* istanbul ignore next */
 router.post("/update_book/:id", (req, res, next) => {
@@ -374,13 +364,13 @@ router.get("/update_form/:id", (req, res, next) => {
     let libraries = result[10][0];
     books.map((book) => {
       authors.forEach((author) => {
-        book["book_id"] === author["book_id"] ? book["author_fullname"] = author["author"].split(",") : 0;
+        book["book_id"] == author["book_id"] ? book["author_fullname"] = author["author"].split(",") : 0;
       });
       rubrics.forEach((rubric) => {
-        book["book_id"] === rubric["book_id"] ? book["rubrics"] = rubric["rubrics"].split(",") : 0;
+        book["book_id"] == rubric["book_id"] ? book["rubrics"] = rubric["rubrics"].split(",") : 0;
       });
       libraries.forEach((library) => {
-        book["book_id"] === library["book_id"] ? book["libraries"] = library["libraries"].split(",") : 0;
+        book["book_id"] == library["book_id"] ? book["libraries"] = library["libraries"].split(",") : 0;
       });
     });
     res.render("tables/update_book_form", {
@@ -393,7 +383,7 @@ router.get("/update_form/:id", (req, res, next) => {
       author: result[5][0],
       library: result[6][0],
       admin: req.session.user ? true : false,
-      book: books.find(function(item){return item["book_id"] === req.params.id ? item : 0}),
+      book: books.find(function(item){return item["book_id"] == req.params.id ? item : 0}),
       helpers: {
         list: function (items, url, id) {
           var out = "";
@@ -422,7 +412,7 @@ router.get("/book_author_editor/:id", (req, res, next) => {
   ]).then((result) => {
       let books = result[0][0]
         .filter(function(item){
-          return item["book_id"] === req.params.id ? item : 0
+          return item["book_id"] == req.params.id ? item : 0
         });
       books.map((book) => book["authors"] = result[1][0]);
       res.render("tables/book_author_editor", {
@@ -482,7 +472,7 @@ router.get("/book_library_editor/:id", (req, res, next) => {
   ]).then((result) => {
       let books = result[0][0]
         .filter(function(item){
-          return item["book_id"] === req.params.id ? item : 0
+          return item["book_id"] == req.params.id ? item : 0
         });
       books.map((book) => book["libraries"] = result[1][0]);
       res.render("tables/book_library_editor", {
@@ -542,7 +532,7 @@ router.get("/book_rubric_editor/:id", (req, res, next) => {
   ]).then((result) => {
       let books = result[0][0]
         .filter(function(item){
-          return item["book_id"] === req.params.id ? item : 0
+          return item["book_id"] == req.params.id ? item : 0
         });
       books.map((book) => book["rubrics"] = result[1][0]);
       res.render("tables/book_rubric_editor", {
@@ -593,32 +583,5 @@ router.post("/delete_book_rubric/:book_id/:rubric_id", (req, res, next) => {
     ]);
   res.redirect("/book_rubric_editor/" + req.params.book_id);
 });
-///////////////ADDITIONAL FUNCTIONS////////////////////////
-/* istanbul ignore next */
-function execute(res, table, command, params) {
-  controller[table][command](params)
-    .then(() => res.redirect("/" + table +"_editor"))
-    .catch((err) => res.render("error", {message: err.message, error: err}));
-}
-/* istanbul ignore next */
-function uploadImage(req, name) {
-  let path = "";
-  const base = "./public/images/";
-  const images = "/images/";
-  if (req.files.image) {
-    let new_image = req.files.image;
-    const fileName = name;
-    path = base + fileName;
-    if (fs.existsSync(path)) fs.unlinkSync(path);
-    return new Promise((resolve, reject) => {
-      new_image.mv(base + fileName, (err) => {
-        if (err) reject(err);
-        else resolve(images + fileName);
-      });
-    });
-  } else return new Promise((resolve) => {
-      resolve(images + "noImage.jpeg");
-  });
-}
 
 module.exports = router;
