@@ -220,12 +220,14 @@ router.get('/library_editor', (req, res, next) =>  {
     })
     .catch((err) => res.render('error', {message: err.message, error: err}));
 });
+/* istanbul ignore next */
 router.post('/add_library', (req, res, next) =>  {
   uploadImage(req, req.body.name)
     .then(result => {
       execute(res, 'library', 'add', [req.body.name, req.body.address, req.body.schedule, result]);
     });
 });
+/* istanbul ignore next */
 router.post('/update_library/:id', (req, res, next) =>  {
   execute(res, 'library', 'update', [
     req.params.id,
@@ -288,6 +290,7 @@ router.get('/book_editor', (req, res, next) => {
   })
   .catch(err => res.render('error', {message: err.message, error: err}))
 });
+/* istanbul ignore next */
 router.post('/add_book', (req, res, next) => {
   uploadImage(req, req.body.name)
     .then(img =>
@@ -323,6 +326,7 @@ router.post('/add_book', (req, res, next) => {
     return promises;
   };
 });
+/* istanbul ignore next */
 router.post('/update_book/:id', (req, res, next) => {
   if (!req.files.image) {
     controller.book.update([
@@ -353,6 +357,7 @@ router.post('/update_book/:id', (req, res, next) => {
 router.post('/delete_book/:id', (req, res, next) => {
   execute(res, 'book', 'delete', [req.params.id]);
 });
+/* istanbul ignore next */
 router.get('/update_form/:id', (req, res, next) => {
   Promise.all([
     controller.type.getAll(),
@@ -443,6 +448,7 @@ router.get('/book_author_editor/:id', (req, res, next) => {
     })
     .catch(err => res.render('error', {message: err.message, error: err}));
 });
+/* istanbul ignore next */
 router.post('/add_book_author', (req, res, next) => {
   controller.book_author
     .add([
@@ -451,6 +457,7 @@ router.post('/add_book_author', (req, res, next) => {
     ]);
   res.redirect('/book_author_editor/' + req.body.book_id)
 });
+/* istanbul ignore next */
 router.post('/update_book_author/:book_id/:author_id', (req, res, next) => {
   controller.book_author
     .update([
@@ -461,6 +468,7 @@ router.post('/update_book_author/:book_id/:author_id', (req, res, next) => {
   ]);
   res.redirect('/book_author_editor/' + req.params.book_id);
 });
+/* istanbul ignore next */
 router.post('/delete_book_author/:book_id/:author_id', (req, res, next) => {
   controller.book_author
     .delete([
@@ -500,6 +508,7 @@ router.get('/book_library_editor/:id', (req, res, next) => {
     })
     .catch(err => res.render('error', {message: err.message, error: err}));
 });
+/* istanbul ignore next */
 router.post('/add_book_library', (req, res, next) => {
   controller.book_library
     .add([
@@ -508,6 +517,7 @@ router.post('/add_book_library', (req, res, next) => {
     ]);
   res.redirect('/book_library_editor/' + req.body.book_id)
 });
+/* istanbul ignore next */
 router.post('/update_book_library/:book_id/:library_id', (req, res, next) => {
   controller.book_library
     .update([
@@ -518,6 +528,7 @@ router.post('/update_book_library/:book_id/:library_id', (req, res, next) => {
   ]);
   res.redirect('/book_library_editor/' + req.params.book_id);
 });
+/* istanbul ignore next */
 router.post('/delete_book_library/:book_id/:library_id', (req, res, next) => {
   controller.book_library
     .delete([
@@ -557,6 +568,7 @@ router.get('/book_rubric_editor/:id', (req, res, next) => {
     })
     .catch(err => res.render('error', {message: err.message, error: err}));
 });
+/* istanbul ignore next */
 router.post('/add_book_rubric', (req, res, next) => {
   controller.book_rubric
     .add([
@@ -565,6 +577,7 @@ router.post('/add_book_rubric', (req, res, next) => {
     ]);
   res.redirect('/book_rubric_editor/' + req.body.book_id);
 });
+/* istanbul ignore next */
 router.post('/update_rubric_author/:book_id/:rubric_id', (req, res, next) => {
   controller.book_rubric
     .update([
@@ -575,6 +588,7 @@ router.post('/update_rubric_author/:book_id/:rubric_id', (req, res, next) => {
   ]);
   res.redirect('/book_rubric_editor/' + req.params.book_id);
 });
+/* istanbul ignore next */
 router.post('/delete_book_rubric/:book_id/:rubric_id', (req, res, next) => {
   controller.book_rubric
     .delete([
