@@ -15,7 +15,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('author', {
+  return db.createTable('book', {
     id: { type: 'int', primaryKey: true },
     author_id: 'int',
     type_id: 'int',
