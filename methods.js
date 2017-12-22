@@ -1,6 +1,5 @@
 const controller = require("./controller");
 const fs = require("fs");
-/* istanbul ignore next */
 module.exports = {
   execute: function(res, table, command, params) {
     controller[table][command](params)
