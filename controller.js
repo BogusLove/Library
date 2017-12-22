@@ -10,15 +10,15 @@ const controllers = {
   category: new CRUD("category"),
   country: new CRUD("country"),
   author: {
-    getMain: function () {
+    getMain () {
       return sequelize
         .query("select author.author_id, author.author_fullname from author;");
     },
-    getAll: function () {
+    getAll () {
       return sequelize
         .query("select author.author_id, author.author_fullname, country.country_name, author.author_country_id from author join country on author.author_country_id = country.country_id;");
     },
-    add: function (param) {
+    add (param) {
       return sequelize
         .query("insert into author(author_fullname, author_country_id) values(:fullname, :country)", {
           replacements: {
@@ -27,7 +27,7 @@ const controllers = {
           }
         });
     },
-    update: function (param) {
+    update (param) {
       return sequelize
         .query("update author set author.author_fullname = :name, author.author_country_id = :country_id where author.author_id = :author_id", {
           replacements: {
@@ -37,7 +37,7 @@ const controllers = {
           }
         });
     },
-    delete: function (param) {
+    delete (param) {
       return sequelize
         .query("delete from author where author.author_id = :id", {
           replacements: {
@@ -47,11 +47,11 @@ const controllers = {
     }
   },
   library: {
-    getAll: function () {
+    getAll () {
       return sequelize
         .query("select * from library;");
     },
-    getByName: function (param) {
+    getByName (param) {
       return sequelize
         .query("select * from library where library_name = :name;", {
           replacements: {
@@ -59,7 +59,7 @@ const controllers = {
           }
         });
     },
-    add: function (param) {
+    add (param) {
       return sequelize
         .query("insert into library(library_name, library_address, library_schedule, library_image) values(:name, :address, :schedule, :image)", {
           replacements: {
@@ -70,7 +70,7 @@ const controllers = {
           }
         });
     },
-    update: function (param) {
+    update (param) {
       return sequelize
         .query("update library set library_name = :name, library_address = :address, library_schedule = :schedule where library.library_id = :id", {
           replacements: {
@@ -81,7 +81,7 @@ const controllers = {
           }
         });
     },
-    delete: function (param) {
+    delete (param) {
       return sequelize
         .query("delete from library where library.library_id = :id", {
           replacements: {
@@ -91,11 +91,11 @@ const controllers = {
     }
   },
   book: {
-    getMain: function () {
+    getMain () {
       return sequelize
         .query("select book_id, book_name from book;");
     },
-    getByID: function (param) {
+    getByID (param) {
       return sequelize
         .query("select * from book where book_id = :id;", {
           replacements: {
@@ -103,7 +103,7 @@ const controllers = {
           }
         });
     },
-    getByName: function (param) {
+    getByName (param) {
       return sequelize
         .query("select book_id from book where book_name = :name;", {
           replacements: {
@@ -111,27 +111,27 @@ const controllers = {
           }
         });
     },
-    getAll: function () {
+    getAll () {
       return sequelize
         .query("select book_id, book_name, book_year, book_image, t.*, p.*, c.* from book b join type t on t.type_id = b.book_type_id join publisher p on p.publisher_id = b.book_publisher_id join category c on c.category_id = b.book_category_id");
     },
-    getRubrics: function () {
+    getRubrics () {
       return sequelize
         .query("select b.book_id, group_concat(r.rubric_name) as rubrics from book b join book_rubric br on b.book_id = br.book_id join rubric r on r.rubric_id = br.rubric_id group by b.book_name;");
     },
-    getLibraries: function () {
+    getLibraries () {
       return sequelize
         .query("select b.book_id, group_concat(l.library_name) as libraries from book b join book_library bl on b.book_id = bl.book_id join library l on l.library_id = bl.library_id group by b.book_name;");
     },
-    getAuthors: function () {
+    getAuthors () {
       return sequelize
         .query("select b.book_id, group_concat(a.author_fullname) as author from book b join book_author ba on b.book_id = ba.book_id join author a on a.author_id = ba.author_id group by b.book_name;");
     },
-    getAllMany: function () {
+    getAllMany () {
       return sequelize
         .query("select b.*, group_concat(r.rubric_name) as rubrics, group_concat(a.author_fullname) as author, group_concat(l.library_name) as library from book b join book_rubric br on b.book_id = br.book_id join rubric r on r.rubric_id = br.rubric_id join book_author ba on b.book_id = ba.book_id join author a on a.author_id = ba.author_id join book_library bl on b.book_id = bl.book_id join library l on l.library_id = bl.library_id group by b.book_name;");
     },
-    add: function (param) {
+    add (param) {
       return sequelize
         .query("insert into book(book_name, book_year, book_type_id, book_publisher_id, book_category_id, book_image)" +
                       " values(:book_name, :book_year, :book_type_id, :book_publisher_id, :book_category_id, :book_image)", {
@@ -145,7 +145,7 @@ const controllers = {
           }
         });
     },
-    update: function (param) {
+    update (param) {
       return sequelize
         .query("update book b set b.book_name = :book_name, b.book_year = :book_year, b.book_type_id = :book_type_id, b.book_publisher_id = :book_publisher_id, b.book_category_id = :book_category_id, b.book_image = :book_image where b.book_id = :book_id", {
           replacements: {
@@ -159,7 +159,7 @@ const controllers = {
           }
         });
     },
-    delete: function (param) {
+    delete (param) {
       return sequelize
         .query("delete from book where book.book_id = :id", {
           replacements: {
@@ -169,11 +169,11 @@ const controllers = {
     }
   },
   book_author: {
-    getAll: function () {
+    getAll () {
       return sequelize
         .query("select ba.*, b.book_name, a.author_fullname from book_author ba join book b on b.book_id = ba.book_id join author a on a.author_id = ba.author_id;");
     },
-    add: function (param) {
+    add (param) {
       return sequelize
         .query("insert into book_author(book_id, author_id) values(:book_id, :author_id)", {
           replacements: {
@@ -182,7 +182,7 @@ const controllers = {
           }
         });
     },
-    update: function (param) {
+    update (param) {
       return sequelize
         .query("update book_author set book_id = :new_book_id, author_id = :new_author_id where book_id = :book_id and author_id = :author_id", {
           replacements: {
@@ -193,7 +193,7 @@ const controllers = {
           }
         });
     },
-    delete: function (param) {
+    delete (param) {
       return sequelize
         .query("delete from book_author where book_id = :book_id and author_id = :author_id", {
           replacements: {
@@ -204,11 +204,11 @@ const controllers = {
     }
   },
   book_rubric: {
-    getAll: function () {
+    getAll () {
       return sequelize
         .query("select br.*, b.book_name, r.rubric_name from book_rubric br join book b on b.book_id = br.book_id join rubric r on r.rubric_id = br.rubric_id;");
     },
-    add: function (param) {
+    add (param) {
       return sequelize
         .query("insert into book_rubric(book_id, rubric_id) values(:book_id, :rubric_id)", {
           replacements: {
@@ -217,7 +217,7 @@ const controllers = {
           }
         });
     },
-    update: function (param) {
+    update (param) {
       return sequelize
         .query("update book_rubric set book_id = :new_book_id, rubric_id = :new_rubric_id where book_id = :book_id and rubric_id = :rubric_id", {
           replacements: {
@@ -228,7 +228,7 @@ const controllers = {
           }
         });
     },
-    delete: function (param) {
+    delete (param) {
       return sequelize
         .query("delete from book_rubric where book_id = :book_id and rubric_id = :rubric_id", {
           replacements: {
@@ -239,11 +239,11 @@ const controllers = {
     }
   },
   book_library: {
-    getAll: function () {
+    getAll () {
       return sequelize
         .query("select bl.*, b.book_name, l.library_name from book_library bl join book b on b.book_id = bl.book_id join library l on l.library_id = bl.library_id;");
     },
-    add: function (param) {
+    add (param) {
       return sequelize
         .query("insert into book_library(book_id, library_id) values(:book_id, :library_id)", {
           replacements: {
@@ -252,7 +252,7 @@ const controllers = {
           }
       });
     },
-    update: function (param) {
+    update (param) {
       return sequelize
         .query("update book_library set book_id = :new_book_id, library_id = :new_library_id where book_id = :book_id and library_id = :library_id", {
           replacements: {
@@ -263,7 +263,7 @@ const controllers = {
           }
         });
     },
-    delete: function (param) {
+    delete (param) {
       return sequelize
         .query("delete from book_library where book_id = :book_id and library_id = :library_id", {
           replacements: {
@@ -274,7 +274,7 @@ const controllers = {
     }
   },
   admin: {
-    get: function (param) {
+    get (param) {
       return sequelize
         .query("select admin_id as id, admin_name as name from admin where admin_name = :name and admin_password = :password;", {
           replacements: {
