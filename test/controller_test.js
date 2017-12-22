@@ -1,5 +1,5 @@
-var expect = require("expect.js");
-
+process.env.NODE_ENV = 'test';
+const expect = require("expect.js");
 
 describe("1", function() {
   it("should return object", function() {

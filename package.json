@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "test": "mocha",
-    "cover": "istanbul cover _mocha",
-    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "start": "NODE_ENV=dev node ./bin/www",
+    "test": "NODE_ENV=dev mocha",
+    "cover": "NODE_ENV=dev istanbul cover _mocha",
+    "coveralls": "NODE_ENV=dev npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -15,6 +15,8 @@
     "chai-http": "^3.0.0",
     "codacy-coverage": "^2.0.3",
     "cookie-parser": "~1.4.3",
+    "db-migrate": "^0.10.2",
+    "db-migrate-mysql": "^1.1.10",
     "debug": "~2.6.9",
     "expect.js": "^0.3.1",
     "express": "~4.15.5",
@@ -26,6 +28,7 @@
     "mysql2": "^1.5.1",
     "nodemon": "^1.13.3",
     "sequelize": "^4.28.5",
+    "sequelize-cli": "^3.2.0",
     "serve-favicon": "~2.4.5"
   },
   "main": "app.js",

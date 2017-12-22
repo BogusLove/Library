@@ -1,5 +1,5 @@
 "use strict"
-
+process.env.NODE_ENV = 'test';
 const app = require("../app");
 const chai = require("chai");
 const expect = chai.expect;
@@ -14,6 +14,7 @@ describe("/", () => {
       .get("/")
       .end((err, res) => {
         expect(err).to.be.null;
+        expect(res.body).to.be.an('object');
         expect(res).to.have.status(200);
         done();
       });
@@ -27,6 +28,7 @@ describe("/logout", () => {
       .post("/logout")
       .end((err, res) => {
         expect(err).to.be.null;
+        expect(res.body).to.be.an('object');
         expect(res).to.have.status(200);
         done();
       });
@@ -38,10 +40,17 @@ describe("/search", () => {
     chai
       .request(app)
       .post("/search")
-      .send({table: "", query: ""})
+      .send({table: "book", query: "qwerty"})
       .end((err, res) => {
         expect(err).to.be.null;
+        expect(res.body).to.be.an('object');
         expect(res).to.have.status(200);
+        expect(res.body).not.to.have.property('name_to_update');
+        expect(res.body).not.to.have.property('current_image');
+        expect(res.body).not.to.have.property('type_to_update');
+        expect(res.body).not.to.have.property('publisher_to_update');
+        expect(res.body).not.to.have.property('category_to_update');
+        expect(res.body).not.to.have.property('fullname_to_update');
         done();
       });
   });
@@ -54,7 +63,9 @@ describe("/type_editor", () => {
       .get("/type_editor")
       .end((err, res) => {
         expect(err).to.be.null;
+        expect(res.body).to.be.an('object');
         expect(res).to.have.status(200);
+        expect(res.body).not.to.have.property('type_name');
         done();
       });
   });
@@ -68,6 +79,9 @@ describe("/add_type", () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
+        expect(res.body).not.to.have.property('id');
+        expect(res.body).not.to.have.property('type_name');
+        expect(res.body).to.be.an('object');
         done();
       });
   });
@@ -79,8 +93,10 @@ describe("/update_type/:id", () => {
       .request(app)
       .post("/update_type/" + null)
       .end((err, res) => {
+        expect(res.body).to.be.an('object');
         expect(err).to.be.null;
         expect(res).to.have.status(200);
+        expect(res.body).not.to.have.property('type_name');
         done();
       });
   });
@@ -93,7 +109,9 @@ describe("/delete_type/:id", () => {
       .post("/delete_type/" + null)
       .end((err, res) => {
         expect(err).to.be.null;
+        expect(res.body).to.be.an('object');
         expect(res).to.have.status(200);
+        expect(res.body).not.to.have.property('type_name');
         done();
       });
   });
@@ -107,6 +125,8 @@ describe("/rubric_editor", () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body).not.to.have.property('rubric_name');
         done();
       });
   });
@@ -120,6 +140,9 @@ describe("/add_rubric", () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body).not.to.have.property('rubric_id');
+        expect(res.body).not.to.have.property('rubric_name');
         done();
       });
   });
@@ -133,6 +156,8 @@ describe("/update_rubric/:id", () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body).not.to.have.property('rubric_name');
         done();
       });
   });
@@ -145,7 +170,9 @@ describe("/delete_rubric/:id", () => {
       .post("/delete_rubric/" + null)
       .end((err, res) => {
         expect(err).to.be.null;
+        expect(res.body).to.be.an('object');
         expect(res).to.have.status(200);
+        expect(res.body).not.to.have.property('rubric_name');
         done();
       });
   });
@@ -159,6 +186,9 @@ describe("/publisher_editor", () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body).not.to.have.property('id');
+        expect(res.body).not.to.have.property('publisher_name');
         done();
       });
   });
@@ -172,6 +202,7 @@ describe("/add_publisher", () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
+        expect(res.body).not.to.have.property('name');
         done();
       });
   });
@@ -185,6 +216,7 @@ describe("/update_publisher/:id", () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
+        expect(res.body).not.to.have.property('name');
         done();
       });
   });
@@ -198,6 +230,7 @@ describe("/delete_publisher/:id", () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
+        expect(res.body).not.to.have.property('name');
         done();
       });
   });
