@@ -4,3 +4,4 @@ test_config.js
 database.json
 *.html
 test/coverage/
+package-lock.json
