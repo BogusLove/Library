@@ -1,7 +1,4 @@
 node_modules/
 config.js
-test_config.js
-database.json
-*.html
 test/coverage/
 package-lock.json
